@@ -1123,22 +1123,27 @@ footer {
 }
 
 @media (max-width: 900px) {
-    .mobile-menu-toggle { display: block; }
+    /* Keep nav options inline on mobile: hide hamburger, keep horizontal layout */
+    .mobile-menu-toggle { display: none; }
     .nav-links {
-        position: fixed;
-        top: 72px;
-        right: 0;
-        left: 0;
-        background: rgba(0,0,0,0.97);
-        flex-direction: column;
-        gap: 0;
-        padding: 1.25rem 1.5rem;
-        transform: translateY(-120%);
-        transition: transform 0.3s ease;
-        z-index: 1500;
+        position: static;
+        top: auto;
+        right: auto;
+        left: auto;
+        background: transparent;
+        flex-direction: row;
+        gap: 0.6rem;
+        padding: 0.25rem 0.5rem;
+        transform: none;
+        transition: none;
+        z-index: auto;
+        display: flex;
+        justify-content: center;
+        overflow-x: auto;
+        white-space: nowrap;
     }
-    .nav-links a { padding: 0.8rem 0; font-size: 1.05rem; }
-    header.nav-open .nav-links { transform: translateY(0); }
+    .nav-links li { display: inline-block; }
+    .nav-links a { padding: 0.5rem 0.6rem; font-size: 1rem; display: inline-block; }
 }
 
 @media (max-width: 768px) {
