@@ -488,6 +488,87 @@
     </div>
 </section>
 
+<!-- Script: autoplay / sonido condicional para el hero video -->
+<script>
+// Nota: muchos navegadores móviles bloquean autoplay con sonido.
+// Estrategia: reproducir siempre en muted (permitido), y cuando el video
+// entre en vista intentamos desmutear y reproducir con sonido. Si el navegador
+// rechaza el play por política, escuchamos un primer toque del usuario para
+// intentar desmutear mientras el video esté visible. No añadimos botones visibles.
+(function(){
+    const vid = document.getElementById('hero-video');
+    if(!vid) return;
+
+    // Asegurar atributos mínimos
+    vid.playsInline = true;
+    vid.loop = true;
+    vid.muted = true; // inicio silenciado para permitir autoplay
+
+    // Force play muted (algunos navegadores requieren llamada explícita)
+    const startMutedPlay = () => {
+        const p = vid.play();
+        if(p && p.catch) p.catch(()=>{});
+    };
+    startMutedPlay();
+
+    // Observer para detectar cuando el video está en pantalla
+    const observer = new IntersectionObserver((entries)=>{
+        entries.forEach(entry => {
+            if(entry.isIntersecting && entry.intersectionRatio > 0.5) {
+                // Intentar activar sonido cuando el video esté mayormente visible
+                tryUnmuteAndPlay(entry);
+            } else {
+                // Al salir de la sección, silenciar el video (solo queremos sonido en la sección)
+                vid.muted = true;
+                // opcional: no pausar, solo silenciar
+            }
+        });
+    }, { threshold: [0.25, 0.5, 0.75] });
+
+    observer.observe(vid);
+
+    function tryUnmuteAndPlay(entry){
+        // Intento directo de desmutear y reproducir
+        vid.muted = false;
+        vid.volume = 0.6;
+        const playPromise = vid.play();
+        if(playPromise !== undefined){
+            playPromise.then(()=>{
+                // Reproducción con sonido permitida
+            }).catch((err)=>{
+                // Falló por política del navegador: volver a silenciar y esperar interacción
+                vid.muted = true;
+                attachInteractionFallback(entry);
+            });
+        }
+    }
+
+    function attachInteractionFallback(entry){
+        // Si el usuario interactúa (touch/click) mientras el video está visible, desmutear y reproducir
+        const onInteraction = function(e){
+            // Solo actuar si sigue en viewport
+            const rect = vid.getBoundingClientRect();
+            const vh = Math.max(document.documentElement.clientHeight || 0, window.innerHeight || 0);
+            const visible = rect.top < vh && rect.bottom > 0;
+            if(!visible) return;
+            vid.muted = false;
+            vid.volume = 0.7;
+            vid.play().catch(()=>{});
+            window.removeEventListener('touchstart', onInteraction);
+            window.removeEventListener('click', onInteraction);
+        };
+
+        window.addEventListener('touchstart', onInteraction, { once: true });
+        window.addEventListener('click', onInteraction, { once: true });
+    }
+
+    // Si la página pierde visibilidad, silenciar para evitar reproducir audio en background
+    document.addEventListener('visibilitychange', () => {
+        if(document.hidden) vid.muted = true;
+    });
+})();
+</script>
+
 
     <!-- Footer -->
     <footer>

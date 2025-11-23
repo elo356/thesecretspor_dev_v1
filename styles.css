@@ -152,9 +152,17 @@ nav {
     pointer-events: none;
 }
 
-/* Ensure the video fills the hero including behind the header on small screens */
+/* Mobile: avoid header covering hero by pushing the hero down; keep video filling the hero box */
 @media (max-width: 768px) {
-    .hero { padding-top: 64px; min-height: calc(100vh - 64px); }
+    /* push the hero below the fixed header so it is not visually covered */
+    .hero { margin-top: 64px; min-height: calc(100vh - 64px); }
+    /* keep the video positioned at the top of the hero (no absolute shift) */
+    .hero video { top: 0; height: 100%; object-position: center 55%; }
+}
+
+@media (max-width: 480px) {
+    .hero { margin-top: 64px; min-height: calc(100vh - 64px); }
+    .hero video { top: 0; height: 100%; object-position: center 65%; }
 }
 
 .hero h1 {
