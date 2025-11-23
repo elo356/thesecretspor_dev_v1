@@ -347,6 +347,33 @@ section {
     line-height: 1.8;
 }
 
+/* Vision & Mission highlight */
+.vision-mission {
+    display: flex;
+    gap: 1rem;
+    margin-top: 1.5rem;
+    align-items: stretch;
+}
+.vm-card {
+    flex: 1 1 0;
+    background: linear-gradient(180deg, rgba(0,0,0,0.03), rgba(255,255,255,0.02));
+    border: 1px solid rgba(0,0,0,0.06);
+    padding: 1rem;
+    border-radius: 14px;
+    text-align: left;
+    box-shadow: 0 6px 18px rgba(0,0,0,0.06);
+}
+.vm-card h4 { margin-top: 0.25rem; margin-bottom: 0.5rem; font-size: 1.1rem; }
+.vm-card p { margin: 0; color: var(--text-dark); }
+.vm-icon { width: 46px; height: 46px; display: inline-flex; align-items: center; justify-content: center; border-radius: 10px; background: var(--primary-color); color: var(--secondary-color); font-size: 1.15rem; margin-right: 0.75rem; float: left; }
+.vm-card .vm-icon + h4 { margin-left: 60px; }
+
+@media (max-width: 900px) {
+    .vision-mission { flex-direction: column; }
+    .vm-card .vm-icon { float: none; margin: 0 0 0.6rem 0; }
+    .vm-card .vm-icon + h4 { margin-left: 0; }
+}
+
 .about-text strong {
     color: var(--primary-color);
 }
@@ -370,6 +397,29 @@ section {
     display: block;
     filter: grayscale(100%);
     transition: filter 0.5s ease;
+}
+
+/* Badge "Desde 2019" */
+.since-badge span {
+    background: var(--primary-color);
+    color: var(--secondary-color);
+    padding: 0.45rem 0.9rem;
+    border-radius: 20px;
+    font-weight: 700;
+    border: 2px solid var(--secondary-color);
+    display: inline-block;
+}
+
+/* Small adjustments for vision/mission body */
+.vm-body { overflow: hidden; }
+
+/* Responsive: stack about content on small screens */
+@media (max-width: 900px) {
+    .about-content {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+    }
+    .about-image .image-frame { max-width: 420px; margin: 0 auto; }
 }
 
 /* Make the About section image smaller but fully visible */
