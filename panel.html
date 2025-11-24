@@ -390,7 +390,7 @@
   </main>
 </div>
 <script>
-  const API_BASE = "https://thesecretspot.onrender.com/api";
+  const API_BASE = "/api"; // use same origin
   const TOKEN = "123456";
 
   function switchPanel(btn, panel){
@@ -463,11 +463,15 @@
 
   async function uploadSlot(slotKey){
     const fileInput = document.getElementById("file-"+slotKey);
+    const serviciosStatusEl = document.getElementById('serviciosStatus');
+    const sobreStatusEl = document.getElementById('sobreStatus');
+    const grupoStatusEl = document.getElementById('grupoStatus');
+    const staffStatusEl = document.getElementById('staffStatus');
     let statusEl =
-      slotKey.includes("servicio") ? serviciosStatus :
-      slotKey === "about_img" ? sobreStatus :
-      slotKey === "team_group" ? grupoStatus :
-      staffStatus;
+      slotKey.includes("servicio") ? serviciosStatusEl :
+      slotKey === "about_img" ? sobreStatusEl :
+      slotKey === "team_group" ? grupoStatusEl :
+      staffStatusEl;
 
     if(!fileInput.files[0]) return alert("Selecciona una imagen");
 
@@ -497,7 +501,7 @@
   }
 
   function renderGallery(items){
-    const list = galleryList;
+    const list = document.getElementById('galleryList');
     list.innerHTML = "";
     if(!items.length){
       list.innerHTML = `<p class="muted">Aún no hay imágenes en la galería.</p>`;
@@ -520,9 +524,9 @@
   }
 
   async function uploadGalleryImage(){
-    const fileInput = galleryFile;
-    const category = galleryCategory.value;
-    const status = galleryStatus;
+    const fileInput = document.getElementById('galleryFile');
+    const category = document.getElementById('galleryCategory').value;
+    const status = document.getElementById('galleryStatus');
 
     if(!fileInput.files[0]) return alert("Selecciona una imagen");
 
