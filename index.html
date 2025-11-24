@@ -287,24 +287,24 @@
     <section class="gallery" id="galeria">
         <h2 class="section-title">Galería de Trabajos</h2>
         
-        <div class="gallery-filters">
-            <button class="filter-btn active" data-filter="all">
-                <i class="fas fa-th"></i> Todos
-            </button>
-            <button class="filter-btn" data-filter="manicura-pedicura">
-                <i class="fas fa-hand-sparkles"></i> Manicura y Pedicura
-            </button>
-            <button class="filter-btn" data-filter="damas">
-                <i class="fas fa-female"></i> Corte y Color Damas
-            </button>
-            <button class="filter-btn" data-filter="caballeros">
-                <i class="fas fa-male"></i> Corte Caballeros
-            </button>
-            <button class="filter-btn" data-filter="ninos">
-                <i class="fas fa-child"></i> Corte Niños
-            </button>
-        </div>
-        
+<div class="gallery-filters">
+    <button class="filter-btn active" data-filter="all">
+        <i class="fas fa-th"></i> Todos
+    </button>
+    <button class="filter-btn" data-filter="manicura-pedicura">
+        <i class="fas fa-hand-sparkles"></i> Manicura y Pedicura
+    </button>
+    <button class="filter-btn" data-filter="damas">
+        <i class="fas fa-female"></i> Damas
+    </button>
+    <button class="filter-btn" data-filter="caballeros">
+        <i class="fas fa-male"></i> Caballeros
+    </button>
+    <button class="filter-btn" data-filter="ninos">
+        <i class="fas fa-child"></i> Niños
+    </button>
+</div>
+
         <div class="gallery-grid">
             
 
@@ -1234,6 +1234,76 @@ async function cargarContenido() {
 
 // Cargar todo al entrar a la web
 cargarContenido();
+
+async function cargarGaleria() {
+    const res = await fetch(`${API}/content`);
+    const data = await res.json();
+
+    const cont = document.querySelector(".gallery-grid");
+    cont.innerHTML = "";
+
+    data.galeria.forEach(item => {
+        const el = document.createElement("div");
+        el.className = "gallery-item";
+        el.setAttribute("data-category", item.categoria);
+
+        el.innerHTML = `
+            <span class="gallery-category">${categoriaNombre(item.categoria)}</span>
+            <img src="${item.url}" alt="" loading="lazy">
+            <div class="gallery-overlay">
+                <div>
+                    <h4>${categoriaNombre(item.categoria)}</h4>
+                    <p>Trabajo de ${categoriaNombre(item.categoria)}</p>
+                </div>
+            </div>
+        `;
+
+        cont.appendChild(el);
+    });
+
+    activarFiltros();
+}
+
+// Traducción de categorías (para texto bonito)
+function categoriaNombre(cat) {
+    const map = {
+        "manicura-pedicura": "Manicura y Pedicura",
+        "damas": "Damas",
+        "caballeros": "Caballeros",
+        "ninos": "Niños"
+    };
+    return map[cat] || cat;
+}
+
+// Filtros funcionales
+function activarFiltros() {
+    const buttons = document.querySelectorAll(".filter-btn");
+    const items = document.querySelectorAll(".gallery-item");
+
+    buttons.forEach(btn => {
+        btn.onclick = () => {
+            const filtro = btn.getAttribute("data-filter");
+
+            buttons.forEach(b => b.classList.remove("active"));
+            btn.classList.add("active");
+
+            items.forEach(item => {
+                const cat = item.getAttribute("data-category");
+
+                if (filtro === "all" || filtro === cat) {
+                    item.style.display = "block";
+                    item.classList.remove("hidden");
+                } else {
+                    item.style.display = "none";
+                    item.classList.add("hidden");
+                }
+            });
+        };
+    });
+}
+
+// Cargar al entrar a la página
+cargarGaleria();
 </script>
 
 </body>
