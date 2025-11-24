@@ -158,10 +158,7 @@
     <div id="headerVideoPreview" style="margin-top:10px;"></div>
 </section>
 
-<section class="card">
-    <h2>Uso de almacenamiento</h2>
-    <div id="storageStatus">Cargando...</div>
-</section>
+<button onclick="logout()" style="float:right; margin-top:10px;">Cerrar sesión</button>
 
         <!-- SOBRE NOSOTROS -->
         <section class="card">
@@ -245,6 +242,11 @@
         </section>
     </div>
 </main>
+<script>
+if (!localStorage.getItem("panel_token")) {
+    window.location.href = "login.html"; // redirige si no está logueado
+}
+</script>
 
 <script>
 const API = "https://thesecretspot.onrender.com";
@@ -377,6 +379,10 @@ async function uploadVideo() {
 
     alert("Video subido correctamente");
     fetchContent(); // recargar el panel
+}
+function logout() {
+    localStorage.removeItem("panel_token");
+    window.location.href = "login.html";
 }
 
 async function deleteImage(section, url) {

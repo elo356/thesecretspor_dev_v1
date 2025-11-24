@@ -161,3 +161,16 @@ def delete_image(section: str, url: str):
     save_content(data)
 
     return {"message": "Imagen eliminada correctamente"}
+from fastapi import FastAPI, HTTPException, Form
+from fastapi.middleware.cors import CORSMiddleware
+
+# Credenciales (puedes cambiarlas)
+PANEL_USER = "tsc_admin"
+PANEL_PASS = "secretspot_admin3421"
+
+@app.post("/login")
+async def login(username: str = Form(...), password: str = Form(...)):
+    if username == PANEL_USER and password == PANEL_PASS:
+        return {"success": True, "token": "secret-token-123"}
+    else:
+        raise HTTPException(status_code=401, detail="Credenciales inválidas")
