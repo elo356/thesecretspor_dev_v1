@@ -40,6 +40,19 @@
                 <li><a href="#nosotros">Nosotros</a></li>
                 <li><a href="#galeria">Galería</a></li>
                 <li><a href="#contacto">Contacto</a></li>
+                <li class="lang-dropdown">
+    <button class="lang-toggle">
+        <i class="fas fa-globe"></i> ES
+        <i class="fas fa-chevron-down chevron"></i>
+    </button>
+
+    <ul class="lang-menu">
+        <li data-lang="es">Español</li>
+        <li data-lang="en">English</li>
+    </ul>
+</li>
+
+
             </ul>
         </nav>
       
@@ -498,6 +511,77 @@
 
     </div>
 </section>
+<script>
+// --- Dropdown language toggle ---
+const langDropdown = document.querySelector('.lang-dropdown');
+const langToggle = document.querySelector('.lang-toggle');
+const langMenuItems = document.querySelectorAll('.lang-menu li');
+
+langToggle.addEventListener('click', () => {
+    langDropdown.classList.toggle('open');
+});
+
+// Cerrar si clic fuera
+document.addEventListener('click', (e) => {
+    if (!langDropdown.contains(e.target)) {
+        langDropdown.classList.remove('open');
+    }
+});
+
+// --- Sistema multiidioma ---
+const langText = {
+    es: {
+        inicio: "Inicio",
+        servicios: "Servicios",
+        nosotros: "Nosotros",
+        galeria: "Galería",
+        contacto: "Contacto",
+        hero_title: "Estilismo Premium con Atención al Detalle",
+        hero_subtitle: "Experimenta la transformación que mereces en nuestro grooming studio moderno",
+        reservar: "Reserva tu Cita",
+        llamar: "Llamar Ahora",
+        servicios_titulo: "Servicios"
+    },
+    en: {
+        inicio: "Home",
+        servicios: "Services",
+        nosotros: "About Us",
+        galeria: "Gallery",
+        contacto: "Contact",
+        hero_title: "Premium Styling with Attention to Detail",
+        hero_subtitle: "Experience the transformation you deserve at our modern grooming studio",
+        reservar: "Book Appointment",
+        llamar: "Call Now",
+        servicios_titulo: "Services"
+    }
+};
+
+let currentLang = "es";
+
+function updateLanguage(lang) {
+    currentLang = lang;
+
+    document.querySelectorAll("[data-key]").forEach(el => {
+        const key = el.getAttribute("data-key");
+        if (langText[lang][key]) {
+            el.textContent = langText[lang][key];
+        }
+    });
+
+    // Actualizar texto del botón
+    langToggle.innerHTML = `<i class="fas fa-globe"></i> ${lang.toUpperCase()} <i class="fas fa-chevron-down chevron"></i>`;
+}
+
+// Cuando se hace clic en un idioma del menú
+langMenuItems.forEach(item => {
+    item.addEventListener("click", () => {
+        const lang = item.getAttribute("data-lang");
+        updateLanguage(lang);
+        langDropdown.classList.remove("open");
+    });
+});
+</script>
+
 
 <!-- Script: autoplay / sonido condicional para el hero video -->
 <script>
