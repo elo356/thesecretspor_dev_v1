@@ -532,6 +532,7 @@ document.addEventListener('click', (e) => {
 const langText = {
     es: {
         inicio: "Inicio",
+        about_title: "Sobre Nosotros",
         servicios: "Servicios",
         nosotros: "Nosotros",
         galeria: "Galería",
@@ -540,10 +541,64 @@ const langText = {
         hero_subtitle: "Experimenta la transformación que mereces en nuestro grooming studio moderno",
         reservar: "Reserva tu Cita",
         llamar: "Llamar Ahora",
-        servicios_titulo: "Servicios"
+        servicios_titulo: "Servicios",
+        servicios_list: [
+            "Cambios de Imagen",
+            "Cortes en tendencia",
+            "Cortes y color para damas",
+            "Cortes para caballeros",
+            "Cualquier estilo",
+            "Servicio de barbería",
+            "Afeitado al vapor",
+            "Arreglo de barbas",
+            "Faciales",
+            "Toallas calientes",
+            "Manicura",
+            "Pedicura",
+            "Recortes para niños"
+        ],
+        about_p1: "<strong>Jason Agrón</strong> es un estilista con más de 20 años de experiencia en el campo del cuidado personal. Se caracteriza por su compromiso y entrega en cada trabajo que hace. Dando el mejor servicio a su clientela. Tuvo siempre la visión de llevar su conocimiento y profesionalismo a otro nivel y es así como en el 2019, nace <strong>The Secret Spot – Grooming Studio</strong> en Isabela, PR. Jason es educador en el campo para una compañía reconocida a nivel mundial y brinda sus conocimientos a estudiantes, profesionales, shows, etc.",
+        about_p2: "Somos profesionales en cambio de imagen y cuidado del cabello para damas y caballeros. Elaboración de cortes y color para damas y caballeros con las últimas tendencias, faciales, afeitado a vapor, arreglos de barbas, toallas calientes. Especializado en cortes de cabello a Niños. Somos Barbería Unisex.",
+        vm_vision_title: "Visión",
+        vm_vision_p: "Llevar nuestro conocimiento y profesionalismo a otro nivel, siendo referentes en estilismo y grooming en Isabela y la región.",
+        vm_mission_title: "Misión",
+        vm_mission_p: "Ofrecer un servicio distinto, con atención al detalle y al bienestar físico y emocional de cada cliente, entregando confianza y resultados profesionales.",
+        believe_title: "Believe",
+        believe_p: "<strong>Believe</strong> - Nuestro slogan nos recuerda que siempre debemos creer en nuestras capacidades y dar lo mejor de nosotros. Es por eso que todo nuestro equipo de trabajo, se mantiene actualizado con talleres; para brindarle a nuestro público el mejor y más adelantado servicio de acuerdo a las tendencias actuales.",
+        team_message: "En The Secret Spot PR contamos con un equipo talentoso, dedicado y apasionado por el arte del grooming y la belleza. Cada uno de nuestros profesionales aporta experiencia, creatividad y un trato humano excepcional para garantizar una experiencia única a cada cliente. Nuestro equipo combina habilidades en barbería, estilismo, diseño de imagen, uñas, pedicura y servicios de color, brindando un ambiente moderno, familiar y orientado al detalle. Juntos trabajamos con la misión de elevar la confianza de cada persona que entra por nuestras puertas, ofreciendo un servicio de excelencia y manteniendo siempre la esencia y el concepto de nuestro salón.",
+        gallery_title: "Galería de Trabajos",
+        gallery_all: "Todos",
+        gallery_manicure: "Manicura y Pedicura",
+        gallery_damas: "Damas",
+        gallery_caballeros: "Caballeros",
+        gallery_ninos: "Niños",
+        gift_title: "Certificados de Regalo",
+        gift_p1: "¿Buscas el regalo perfecto? Sorprende a tus seres queridos con un certificado de regalo de The Secret Spot. Ideal para cualquier ocasión: cumpleaños, aniversarios, o simplemente para consentir a alguien especial.",
+        gift_feature1_title: "Regalo Perfecto",
+        gift_feature1_p: "La experiencia de estilismo premium que siempre soñaron",
+        gift_feature2_title: "Flexible",
+        gift_feature2_p: "Válido para cualquiera de nuestros servicios profesionales",
+        gift_cta_h3: "Obtén tu Certificado de Regalo",
+        gift_cta_p: "Contáctanos directamente para personalizar tu certificado de regalo con el monto que desees.",
+        gift_btn_call: "Llamar Ahora",
+        gift_btn_email: "Enviar Email",
+        gift_image_p: "El regalo de belleza y confianza que merecen",
+        contact_title: "Contacto",
+        contact_phone_title: "Teléfono",
+        contact_email_title: "Email",
+        contact_hours_title: "Horario",
+        contact_hours_text: "Martes–Sábado: 9am–6pm\nDomingo & Lunes: Cerrado",
+        booking_title: "Reserva tu Cita Online",
+        booking_desc: "Todas nuestras reservas se realizan a través de Booksy para una mejor experiencia.",
+        book_btn: "Reservar en Booksy",
+        hint_text: "Simple, rápido y seguro.",
+        payment_title: "Métodos de Pago",
+        footer_copy: "© 2024 The Secret Spot - Grooming Studio. Todos los derechos reservados.",
+        footer_location: "Isabela, Puerto Rico | Estilismo Premium Desde 2019"
     },
     en: {
         inicio: "Home",
+        about_title: "About Us",
         servicios: "Services",
         nosotros: "About Us",
         galeria: "Gallery",
@@ -552,32 +607,289 @@ const langText = {
         hero_subtitle: "Experience the transformation you deserve at our modern grooming studio",
         reservar: "Book Appointment",
         llamar: "Call Now",
-        servicios_titulo: "Services"
+        servicios_titulo: "Services",
+        servicios_list: [
+            "Makeovers",
+            "Trend Cuts",
+            "Women's Cuts & Color",
+            "Men's Cuts",
+            "Any Style",
+            "Barber Services",
+            "Hot Towel Shave",
+            "Beard Grooming",
+            "Facials",
+            "Hot Towels",
+            "Manicure",
+            "Pedicure",
+            "Kids' Trims"
+        ],
+        about_p1: "<strong>Jason Agrón</strong> is a stylist with over 20 years of experience in personal care. He is known for his commitment and dedication in every job he performs, always providing the best service to his clients. In 2019, Jason founded <strong>The Secret Spot – Grooming Studio</strong> in Isabela, PR. He is also an educator for a globally recognized company, sharing his knowledge with students and professionals.",
+        about_p2: "We are professionals in makeovers and hair care for women and men. We offer the latest trends in cuts and color, facials, hot towel shaves, beard grooming and hot towels. Specialized in kids' haircuts. We are a unisex barber shop.",
+        vm_vision_title: "Vision",
+        vm_vision_p: "Take our knowledge and professionalism to the next level, becoming a reference in styling and grooming in Isabela and the region.",
+        vm_mission_title: "Mission",
+        vm_mission_p: "Offer a distinct service, with attention to detail and the physical and emotional well-being of each client, delivering confidence and professional results.",
+        believe_title: "Believe",
+        believe_p: "<strong>Believe</strong> - Our slogan reminds us to always believe in our abilities and give our best. That's why our entire team stays updated with workshops to provide our clients with the best and most advanced service according to current trends.",
+        team_message: "At The Secret Spot PR we have a talented, dedicated and passionate team. Each of our professionals brings experience, creativity and exceptional human care to ensure a unique experience for every client. Our team combines skills in barbering, styling, image design, nails, pedicures and color services, providing a modern, family-oriented environment focused on detail. Together we work with the mission of elevating confidence for everyone who walks through our doors, offering excellent service while keeping the essence and concept of our salon.",
+        gallery_title: "Work Gallery",
+        gallery_all: "All",
+        gallery_manicure: "Manicure & Pedicure",
+        gallery_damas: "Women",
+        gallery_caballeros: "Men",
+        gallery_ninos: "Kids",
+        gift_title: "Gift Certificates",
+        gift_p1: "Looking for the perfect gift? Surprise your loved ones with a The Secret Spot gift certificate. Ideal for birthdays, anniversaries, or simply to pamper someone special.",
+        gift_feature1_title: "Perfect Gift",
+        gift_feature1_p: "The premium styling experience they've always dreamed of",
+        gift_feature2_title: "Flexible",
+        gift_feature2_p: "Valid for any of our professional services",
+        gift_cta_h3: "Get Your Gift Certificate",
+        gift_cta_p: "Contact us directly to personalize your gift certificate with the amount you want.",
+        gift_btn_call: "Call Now",
+        gift_btn_email: "Send Email",
+        gift_image_p: "The gift of beauty and confidence they deserve",
+        contact_title: "Contact",
+        contact_phone_title: "Phone",
+        contact_email_title: "Email",
+        contact_hours_title: "Hours",
+        contact_hours_text: "Tue–Sat: 9am–6pm\nSun & Mon: Closed",
+        booking_title: "Book Your Appointment Online",
+        booking_desc: "All bookings are handled through Booksy for a better experience.",
+        book_btn: "Book on Booksy",
+        hint_text: "Simple, fast and secure.",
+        payment_title: "Payment Methods",
+        footer_copy: "© 2024 The Secret Spot - Grooming Studio. All rights reserved.",
+        footer_location: "Isabela, Puerto Rico | Premium Styling Since 2019"
     }
 };
 
-let currentLang = "es";
+let currentLang = localStorage.getItem('tss_lang') || 'es';
+
+// Map selectors to keys to avoid adding data-key throughout the HTML
+const translationMap = [
+    { selector: 'nav .nav-links a:nth-child(1)', key: 'inicio' },
+    { selector: 'nav .nav-links a:nth-child(2)', key: 'servicios' },
+    { selector: 'nav .nav-links a:nth-child(3)', key: 'nosotros' },
+    { selector: 'nav .nav-links a:nth-child(4)', key: 'galeria' },
+    { selector: 'nav .nav-links a:nth-child(5)', key: 'contacto' },
+    { selector: '.hero h1', key: 'hero_title' },
+    { selector: '.hero .subtitle', key: 'hero_subtitle' },
+    { selector: '.hero .btn-primary', key: 'reservar' },
+    { selector: '.hero .btn-secondary', key: 'llamar' },
+    { selector: '.servicios-title', key: 'servicios_titulo' },
+    { selector: '.about .section-title', key: 'about_title' },
+    { selector: '.booking-column h3', key: 'booking_title' },
+    { selector: '.booking-column .desc', key: 'booking_desc' },
+    { selector: '.book-btn', key: 'book_btn' },
+    { selector: '.payment-modern h4', key: 'payment_title' },
+    { selector: '.team-believe .believe-title', key: 'believe_title' },
+    { selector: '.team-believe p', key: 'believe_p' },
+    { selector: '.team-message', key: 'team_message' },
+    { selector: '.gift-certificates .section-title', key: 'gift_title' },
+    { selector: '.contact-modern .section-title', key: 'contact_title' },
+    { selector: '.footer-content p:nth-child(2)', key: 'footer_copy' },
+    { selector: '.footer-content p:nth-child(3)', key: 'footer_location' }
+];
 
 function updateLanguage(lang) {
     currentLang = lang;
+    localStorage.setItem('tss_lang', lang);
 
-    document.querySelectorAll("[data-key]").forEach(el => {
-        const key = el.getAttribute("data-key");
-        if (langText[lang][key]) {
-            el.textContent = langText[lang][key];
+    // Apply translations via selectors map
+    translationMap.forEach(entry => {
+        const el = document.querySelector(entry.selector);
+        if (!el) return;
+        const val = langText[lang][entry.key];
+        if (val !== undefined) {
+            el.innerHTML = val; // use innerHTML for rich text in some translations
         }
     });
 
+    // Services list
+    const serviciosList = document.querySelectorAll('.servicios-lista ul li');
+    if (serviciosList && langText[lang].servicios_list) {
+        serviciosList.forEach((li, i) => {
+            if (langText[lang].servicios_list[i]) li.textContent = langText[lang].servicios_list[i];
+        });
+    }
+
+    // About paragraphs
+    const aboutParas = document.querySelectorAll('.about-text p');
+    if (aboutParas.length >= 2) {
+        if (langText[lang].about_p1) aboutParas[0].innerHTML = langText[lang].about_p1;
+        if (langText[lang].about_p2) aboutParas[1].textContent = langText[lang].about_p2;
+    }
+
+    // Vision & Mission
+    const vmTitles = document.querySelectorAll('.vm-card h4');
+    const vmParas = document.querySelectorAll('.vm-card p');
+    if (vmTitles[0]) vmTitles[0].textContent = langText[lang].vm_vision_title || vmTitles[0].textContent;
+    if (vmParas[0]) vmParas[0].textContent = langText[lang].vm_vision_p || vmParas[0].textContent;
+    if (vmTitles[1]) vmTitles[1].textContent = langText[lang].vm_mission_title || vmTitles[1].textContent;
+    if (vmParas[1]) vmParas[1].textContent = langText[lang].vm_mission_p || vmParas[1].textContent;
+
+    // Team believe paragraph
+    const believePara = document.querySelector('.team-believe p');
+    if (believePara && langText[lang].believe_p) believePara.innerHTML = langText[lang].believe_p;
+
+    // Team message
+    const teamMsg = document.querySelector('.team-message');
+    if (teamMsg && langText[lang].team_message) teamMsg.textContent = langText[lang].team_message;
+
+    // Gallery title
+    const galleryTitle = document.querySelector('.gallery .section-title');
+    if (galleryTitle && langText[lang].gallery_title) galleryTitle.textContent = langText[lang].gallery_title;
+
+    // Gallery filters (buttons)
+    const filterBtns = document.querySelectorAll('.gallery-filters .filter-btn');
+    if (filterBtns.length >= 5) {
+        filterBtns[0].childNodes.forEach(n => {}); // noop to keep NodeList stable
+        filterBtns[0].innerHTML = '<i class="fas fa-th"></i> ' + (langText[lang].gallery_all || 'All');
+        filterBtns[1].innerHTML = '<i class="fas fa-hand-sparkles"></i> ' + (langText[lang].gallery_manicure || 'Manicure');
+        filterBtns[2].innerHTML = '<i class="fas fa-female"></i> ' + (langText[lang].gallery_damas || 'Women');
+        filterBtns[3].innerHTML = '<i class="fas fa-male"></i> ' + (langText[lang].gallery_caballeros || 'Men');
+        filterBtns[4].innerHTML = '<i class="fas fa-child"></i> ' + (langText[lang].gallery_ninos || 'Kids');
+    }
+
+    // Translate gallery item labels and overlays based on data-category and inner text patterns
+    document.querySelectorAll('.gallery-item').forEach(item => {
+        const cat = item.getAttribute('data-category');
+        const catLabelMap = {
+            'damas': { es: 'Damas', en: 'Women' },
+            'caballeros': { es: 'Caballeros', en: 'Men' },
+            'ninos': { es: 'Niños', en: 'Kids' },
+            'manicura-pedicura': { es: 'Manicura', en: 'Pedicure' }
+        };
+        const span = item.querySelector('.gallery-category');
+        if (span) {
+            if (cat && catLabelMap[cat]) span.textContent = catLabelMap[cat][lang] || span.textContent;
+            else if (lang === 'en') {
+                // fallback: translate some known Spanish words
+                span.textContent = span.textContent.replace('Damas','Women').replace('Caballeros','Men').replace('Niños','Kids').replace('Pedicura','Pedicure');
+            } else {
+                // es: leave as is
+            }
+        }
+
+        const h4 = item.querySelector('.gallery-overlay h4');
+        const p = item.querySelector('.gallery-overlay p');
+        if (h4) {
+            // pattern-based translations
+            const txt = h4.textContent.trim().toLowerCase();
+            if (/corte dama|corte dama/i.test(h4.textContent)) {
+                h4.textContent = (lang === 'en') ? "Women's Cut" : "Corte Dama";
+            } else if (/corte caballero|corte caballero/i.test(h4.textContent)) {
+                h4.textContent = (lang === 'en') ? "Men's Cut" : "Corte Caballero";
+            } else if (/corte niños|corte niños|corte niños/i.test(h4.textContent)) {
+                h4.textContent = (lang === 'en') ? "Kids' Cut" : "Corte Niños";
+            } else if (/pedicura/i.test(h4.textContent)) {
+                h4.textContent = (lang === 'en') ? "Pedicure" : "Pedicura";
+            } else if (/manicura/i.test(h4.textContent)) {
+                h4.textContent = (lang === 'en') ? "Manicure" : "Manicura";
+            }
+        }
+        if (p) {
+            if (/trabajo de damas/i.test(p.textContent)) p.textContent = (lang === 'en') ? "Work for women" : "Trabajo de damas";
+            else if (/trabajo de caballeros/i.test(p.textContent)) p.textContent = (lang === 'en') ? "Work for men" : "Trabajo de caballeros";
+            else if (/trabajo para niños/i.test(p.textContent)) p.textContent = (lang === 'en') ? "Work for kids" : "Trabajo para niños";
+            else if (/servicio de pedicura/i.test(p.textContent)) p.textContent = (lang === 'en') ? "Pedicure service" : "Servicio de pedicura";
+            else if (lang === 'en') {
+                // generic fallback: leave or slightly translate common words
+                p.textContent = p.textContent.replace('Trabajo','Work').replace('Servicio','Service');
+            }
+        }
+    });
+
+    // Gift / feature items
+    const giftP = document.querySelector('.gift-content .gift-info p');
+    if (giftP && langText[lang].gift_p1) giftP.textContent = langText[lang].gift_p1;
+    const featureTitles = document.querySelectorAll('.gift-content .feature-item h4');
+    const featureParas = document.querySelectorAll('.gift-content .feature-item p');
+    if (featureTitles[0]) featureTitles[0].textContent = langText[lang].gift_feature1_title || featureTitles[0].textContent;
+    if (featureParas[0]) featureParas[0].textContent = langText[lang].gift_feature1_p || featureParas[0].textContent;
+    if (featureTitles[1]) featureTitles[1].textContent = langText[lang].gift_feature2_title || featureTitles[1].textContent;
+    if (featureParas[1]) featureParas[1].textContent = langText[lang].gift_feature2_p || featureParas[1].textContent;
+
+    // Gift CTA
+    const giftCtaH3 = document.querySelector('.gift-cta h3');
+    const giftCtaP = document.querySelector('.gift-cta p');
+    if (giftCtaH3 && langText[lang].gift_cta_h3) giftCtaH3.textContent = langText[lang].gift_cta_h3;
+    if (giftCtaP && langText[lang].gift_cta_p) giftCtaP.textContent = langText[lang].gift_cta_p;
+    const giftCallBtn = document.querySelector('.gift-cta .btn-primary');
+    const giftEmailBtn = document.querySelector('.gift-cta .btn-secondary');
+    if (giftCallBtn) giftCallBtn.innerHTML = `<i class="fas fa-phone"></i> ${langText[lang].gift_btn_call || 'Call'}`;
+    if (giftEmailBtn) giftEmailBtn.innerHTML = `<i class="fas fa-envelope"></i> ${langText[lang].gift_btn_email || 'Email'}`;
+
+    // Gift image caption
+    const giftImgP = document.querySelector('.gift-image p');
+    if (giftImgP && langText[lang].gift_image_p) giftImgP.textContent = langText[lang].gift_image_p;
+
+    // Contact info: use reliable .info-row indexing (map container is a sibling)
+    const infoRows = document.querySelectorAll('.info-column .info-row');
+    if (infoRows && infoRows.length >= 3) {
+        const phoneH4 = infoRows[0].querySelector('h4');
+        const phoneP = infoRows[0].querySelector('p');
+        const emailH4 = infoRows[1].querySelector('h4');
+        const emailP = infoRows[1].querySelector('p');
+        const hoursH4 = infoRows[2].querySelector('h4');
+        const hoursP = infoRows[2].querySelector('p');
+
+        if (phoneH4) phoneH4.textContent = langText[lang].contact_phone_title || phoneH4.textContent;
+        if (phoneP) phoneP.innerHTML = `<a href="tel:787-930-2891">787-930-2891</a>`;
+
+        if (emailH4) emailH4.textContent = langText[lang].contact_email_title || emailH4.textContent;
+        if (emailP) emailP.innerHTML = `<a href="mailto:thesecretspotpr@gmail.com">thesecretspotpr@gmail.com</a>`;
+
+        if (hoursH4) hoursH4.textContent = langText[lang].contact_hours_title || hoursH4.textContent;
+        if (hoursP) hoursP.innerHTML = (langText[lang].contact_hours_text || '').replace(/\n/g,'<br>');
+    } else {
+        // Fallback: try previous selectors if structure differs
+        const phoneH4 = document.querySelector('.info-row h4');
+        if (phoneH4) phoneH4.textContent = langText[lang].contact_phone_title || phoneH4.textContent;
+    }
+
+    // Booking column texts
+    const bookingH3 = document.querySelector('.booking-column h3');
+    if (bookingH3) bookingH3.textContent = langText[lang].booking_title || bookingH3.textContent;
+    const bookingDesc = document.querySelector('.booking-column .desc');
+    if (bookingDesc) bookingDesc.textContent = langText[lang].booking_desc || bookingDesc.textContent;
+    const bookBtnEl = document.querySelector('.book-btn');
+    if (bookBtnEl) bookBtnEl.innerHTML = `<i class="fas fa-calendar-check"></i> ${langText[lang].book_btn || 'Book'}`;
+    const hintEl = document.querySelector('.booking-column .hint');
+    if (hintEl) hintEl.innerHTML = `<i class="fas fa-info-circle"></i> ${langText[lang].hint_text || ''}`;
+
+    // Footer
+    const footerCopy = document.querySelector('.footer-content p:nth-child(2)');
+    const footerLoc = document.querySelector('.footer-content p:nth-child(3)');
+    if (footerCopy) footerCopy.textContent = langText[lang].footer_copy || footerCopy.textContent;
+    if (footerLoc) footerLoc.textContent = langText[lang].footer_location || footerLoc.textContent;
+
+    // Also update any elements that have data-key attribute (backwards-compatible)
+    document.querySelectorAll('[data-key]').forEach(el => {
+        const key = el.getAttribute('data-key');
+        if (langText[lang][key]) el.textContent = langText[lang][key];
+    });
+
+    // Update lang attribute on html
+    document.documentElement.lang = lang;
+
     // Actualizar texto del botón
     langToggle.innerHTML = `<i class="fas fa-globe"></i> ${lang.toUpperCase()} <i class="fas fa-chevron-down chevron"></i>`;
+
+    // Update active state on menu (optional)
+    langMenuItems.forEach(li => li.classList.toggle('selected', li.getAttribute('data-lang') === lang));
 }
+
+// Inicializar con el idioma guardado
+document.addEventListener('DOMContentLoaded', () => updateLanguage(currentLang));
 
 // Cuando se hace clic en un idioma del menú
 langMenuItems.forEach(item => {
-    item.addEventListener("click", () => {
-        const lang = item.getAttribute("data-lang");
+    item.addEventListener('click', () => {
+        const lang = item.getAttribute('data-lang');
         updateLanguage(lang);
-        langDropdown.classList.remove("open");
+        langDropdown.classList.remove('open');
     });
 });
 </script>
@@ -636,8 +948,42 @@ langMenuItems.forEach(item => {
         window.addEventListener('click', onInteraction, { once: true });
     }
 
-    // Mute when page hidden
-    document.addEventListener('visibilitychange', () => { if(document.hidden) vid.muted = true; });
+    // If the video ever ends up paused unexpectedly on mobile, try to recover
+    vid.addEventListener('pause', () => {
+        if (document.hidden) return; // don't fight when page is hidden
+        // try several times with small backoff
+        let attempts = 0;
+        const tryPlay = () => {
+            if (attempts++ > 8) return;
+            vid.play().catch(() => {
+                setTimeout(tryPlay, 300 + attempts * 150);
+            });
+        };
+        tryPlay();
+    });
+
+    // On scroll, ensure playback is resumed if it was paused
+    let scrollTimer = null;
+    window.addEventListener('scroll', () => {
+        if (scrollTimer) clearTimeout(scrollTimer);
+        scrollTimer = setTimeout(() => {
+            if (!document.hidden && vid.paused) {
+                vid.play().catch(()=>{});
+            }
+        }, 120);
+    }, { passive: true });
+
+    // When tab becomes visible again, try to ensure the video plays (muted)
+    document.addEventListener('visibilitychange', () => {
+        if (document.hidden) {
+            vid.muted = true;
+        } else {
+            // try to resume playback silently
+            vid.muted = true;
+            vid.play().catch(()=>{});
+        }
+    });
+
 })();
 </script>
 
@@ -786,14 +1132,18 @@ const galleryItems = document.querySelectorAll('.gallery-item');
 
 filterButtons.forEach(button => {
     button.addEventListener('click', function() {
-
+        // Ensure only the clicked button is active
+        filterButtons.forEach(btn => btn.classList.remove('active'));
         this.classList.add('active');
-        
+
+        // Remove focus so :focus/:hover styles don't remain on touch devices
+        try { this.blur(); } catch(e) {}
+
         const filterValue = this.getAttribute('data-filter');
-        
+
         galleryItems.forEach(item => {
             const category = item.getAttribute('data-category');
-            
+
             if (filterValue === 'all' || category === filterValue) {
                 // Show item
                 item.classList.remove('hidden');
