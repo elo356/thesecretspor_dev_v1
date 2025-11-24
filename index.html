@@ -521,23 +521,26 @@
     window.addEventListener('DOMContentLoaded', startMutedPlay);
     window.addEventListener('load', startMutedPlay);
 
-    // Observer: when video section is visible, attempt to unmute and play; if blocked, rely on user interaction
-    const observer = new IntersectionObserver((entries)=>{
+    // Observer: monitor the whole hero section (#inicio) so audio stays on
+    // until the section is mostly out of view. We use a low threshold so the
+    // sound mutes "más abajo" (only when visibility drops under ~15%).
+    const heroEl = document.getElementById('inicio') || vid;
+    const observer = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
-            if(entry.isIntersecting && entry.intersectionRatio > 0.5){
-                // Try to unmute; if browser blocks, user can still touch/click to enable sound
+            // Keep audio active while at least ~15% of the hero is visible
+            if (entry.isIntersecting && entry.intersectionRatio > 0.15) {
                 vid.muted = false;
                 vid.volume = 0.6;
                 const promise = vid.play();
-                if(promise && promise.catch) promise.catch(()=>{ vid.muted = true; attachInteractionFallback(); });
+                if (promise && promise.catch) promise.catch(() => { vid.muted = true; attachInteractionFallback(); });
             } else {
-                // out of view: mute
+                // Once the hero is mostly out of view, mute the video
                 vid.muted = true;
             }
         });
-    }, { threshold: [0.25,0.5,0.75] });
+    }, { threshold: [0, 0.15, 0.25, 0.5, 0.75, 1] });
 
-    observer.observe(vid);
+    observer.observe(heroEl);
 
     function attachInteractionFallback(){
         const onInteraction = function(){
