@@ -141,8 +141,7 @@ async def upload_hero_video(
 
 # ---- IMÁGENES DE SECCIONES (SLOTS) ----
 VALID_SLOTS = set(DEFAULT_CONTENT["slots"].keys())
-
-@app.post("/api/slot-image/api")
+@app.post("/api/slot-image")
 async def upload_slot_image(
     slot_key: str = Form(...),
     file: UploadFile = File(...),
@@ -169,7 +168,12 @@ async def upload_slot_image(
     data["slots"][slot_key] = url
     save_content(data)
 
-    return {"slot_key": slot_key, "url": url, "message": "Imagen de sección actualizada"}
+    return {
+        "slot_key": slot_key,
+        "url": url,
+        "message": "Imagen de sección actualizada"
+    }
+
 
 # ---- GALERÍA ----
 @app.get("/api/gallery", response_model=List[GalleryItem])

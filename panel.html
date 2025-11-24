@@ -389,13 +389,10 @@
     </section>
   </main>
 </div>
-
 <script>
-  // ======== CONFIGURACIÓN ========
-  const API_BASE = "https://thesecretspot.onrender.com/api"; // <-- CAMBIA ESTO
-  const TOKEN = "123456";                  // <-- MISMO QUE ADMIN_TOKEN
+  const API_BASE = "https://thesecretspot.onrender.com/api";
+  const TOKEN = "123456";
 
-  // ======== CAMBIO DE PANEL ========
   function switchPanel(btn, panel){
     document.querySelectorAll('.nav button').forEach(b => b.classList.remove('active'));
     btn.classList.add('active');
@@ -403,58 +400,48 @@
     document.getElementById('panel-'+panel).classList.remove('hidden');
   }
 
-  // ======== CARGAR CONTENIDO INICIAL ========
   async function loadContent(){
     try{
       const res = await fetch(API_BASE + "/content");
       const data = await res.json();
 
-      // Video
-      const heroPrev = document.getElementById('heroPreview');
       if(data.heroVideo){
-        heroPrev.innerHTML = `<video src="${data.heroVideo}" controls muted loop></video>`;
-      }else{
-        heroPrev.innerHTML = `<p class="muted">No hay video configurado todavía.</p>`;
+        document.getElementById('heroPreview').innerHTML =
+          `<video src="${data.heroVideo}" controls muted loop></video>`;
+      } else {
+        document.getElementById('heroPreview').innerHTML =
+          `<p class="muted">No hay video configurado todavía.</p>`;
       }
 
-      // Slots
       const slots = data.slots || {};
-      const allSlotKeys = [
+      const keys = [
         "servicio_1","servicio_2","servicio_3","servicio_4",
         "about_img","team_group",
         "staff_1","staff_2","staff_3","staff_4","staff_5","staff_6"
       ];
-      allSlotKeys.forEach(k => {
+
+      keys.forEach(k => {
         const img = document.getElementById("prev-"+k);
-        if(!img) return;
-        if(slots[k]){
-          img.src = slots[k];
-        } else {
-          img.src = "";
-          img.alt = "Sin imagen";
-        }
+        if(slots[k]) img.src = slots[k];
+        else img.src = "";
       });
 
-      // Galería
       renderGallery(data.gallery || []);
     }catch(e){
       console.error(e);
     }
   }
 
-  // ======== HERO VIDEO ========
   async function uploadHeroVideo(){
     const fileInput = document.getElementById('heroFile');
     const status = document.getElementById('heroStatus');
-    if(!fileInput.files[0]){
-      alert("Selecciona un video");
-      return;
-    }
+    if(!fileInput.files[0]) return alert("Selecciona un video");
 
     const fd = new FormData();
     fd.append("file", fileInput.files[0]);
 
     status.textContent = "Subiendo video...";
+
     try{
       const res = await fetch(API_BASE + "/hero-video", {
         method: "POST",
@@ -463,37 +450,33 @@
       });
       const data = await res.json();
       if(!res.ok){
-        status.textContent = "Error: " + (data.detail || data.error || "no se pudo subir");
+        status.textContent = "Error: " + (data.detail || data.error);
         return;
       }
       status.textContent = "Video actualizado ✔";
       fileInput.value = "";
       loadContent();
     }catch(e){
-      console.error(e);
       status.textContent = "Error al subir video";
     }
   }
 
-  // ======== SLOTS (IMÁGENES FIJAS) ========
   async function uploadSlot(slotKey){
     const fileInput = document.getElementById("file-"+slotKey);
-    let statusEl;
-    if(slotKey.startsWith("servicio_")) statusEl = document.getElementById("serviciosStatus");
-    else if(slotKey === "about_img") statusEl = document.getElementById("sobreStatus");
-    else if(slotKey === "team_group") statusEl = document.getElementById("grupoStatus");
-    else if(slotKey.startsWith("staff_")) statusEl = document.getElementById("staffStatus");
+    let statusEl =
+      slotKey.includes("servicio") ? serviciosStatus :
+      slotKey === "about_img" ? sobreStatus :
+      slotKey === "team_group" ? grupoStatus :
+      staffStatus;
 
-    if(!fileInput.files[0]){
-      alert("Selecciona una imagen");
-      return;
-    }
+    if(!fileInput.files[0]) return alert("Selecciona una imagen");
 
     const fd = new FormData();
     fd.append("slot_key", slotKey);
     fd.append("file", fileInput.files[0]);
 
-    if(statusEl) statusEl.textContent = "Subiendo imagen...";
+    statusEl.textContent = "Subiendo imagen...";
+
     try{
       const res = await fetch(API_BASE + "/slot-image", {
         method: "POST",
@@ -502,31 +485,30 @@
       });
       const data = await res.json();
       if(!res.ok){
-        if(statusEl) statusEl.textContent = "Error: " + (data.detail || data.error || "no se pudo subir");
+        statusEl.textContent = "Error: " + (data.detail || data.error);
         return;
       }
-      if(statusEl) statusEl.textContent = "Imagen actualizada ✔";
+      statusEl.textContent = "Imagen actualizada ✔";
       fileInput.value = "";
       loadContent();
     }catch(e){
-      console.error(e);
-      if(statusEl) statusEl.textContent = "Error al subir imagen";
+      statusEl.textContent = "Error al subir imagen";
     }
   }
 
-  // ======== GALERÍA ========
   function renderGallery(items){
-    const list = document.getElementById('galleryList');
+    const list = galleryList;
     list.innerHTML = "";
     if(!items.length){
       list.innerHTML = `<p class="muted">Aún no hay imágenes en la galería.</p>`;
       return;
     }
-    items.slice().reverse().forEach(item => {
-      const div = document.createElement('div');
-      div.className = 'gallery-item';
+
+    items.slice().reverse().forEach(item=>{
+      const div = document.createElement("div");
+      div.className = "gallery-item";
       div.innerHTML = `
-        <img src="${item.url}" alt="">
+        <img src="${item.url}">
         <div class="gallery-meta">
           <div class="badge">${item.category}</div>
           <div class="muted">${item.id}</div>
@@ -538,20 +520,18 @@
   }
 
   async function uploadGalleryImage(){
-    const fileInput = document.getElementById('galleryFile');
-    const category = document.getElementById('galleryCategory').value;
-    const status = document.getElementById('galleryStatus');
+    const fileInput = galleryFile;
+    const category = galleryCategory.value;
+    const status = galleryStatus;
 
-    if(!fileInput.files[0]){
-      alert("Selecciona una imagen");
-      return;
-    }
+    if(!fileInput.files[0]) return alert("Selecciona una imagen");
 
     const fd = new FormData();
     fd.append("file", fileInput.files[0]);
     fd.append("category", category);
 
     status.textContent = "Subiendo imagen...";
+
     try{
       const res = await fetch(API_BASE + "/gallery", {
         method: "POST",
@@ -560,38 +540,30 @@
       });
       const data = await res.json();
       if(!res.ok){
-        status.textContent = "Error: " + (data.detail || data.error || "no se pudo subir");
+        status.textContent = "Error: " + (data.detail || data.error);
         return;
       }
       status.textContent = "Imagen añadida ✔";
       fileInput.value = "";
       loadContent();
     }catch(e){
-      console.error(e);
       status.textContent = "Error al subir imagen";
     }
   }
 
   async function deleteGalleryItem(id){
-    if(!confirm("¿Eliminar esta foto de la galería?")) return;
+    if(!confirm("¿Eliminar?")) return;
     try{
-      const res = await fetch(API_BASE + "/gallery/" + id, {
+      await fetch(API_BASE + "/gallery/" + id, {
         method: "DELETE",
         headers: { "Authorization": "Bearer " + TOKEN }
       });
-      const data = await res.json();
-      if(!res.ok){
-        alert("Error: " + (data.detail || data.error || "no se pudo eliminar"));
-        return;
-      }
       loadContent();
     }catch(e){
-      console.error(e);
-      alert("Error al eliminar");
+      alert("Error");
     }
   }
 
-  // ======== INIT ========
   window.addEventListener("DOMContentLoaded", loadContent);
 </script>
 
