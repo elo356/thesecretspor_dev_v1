@@ -1178,15 +1178,34 @@ async function cargarContenido() {
     const data = await res.json();
 
     // ========== 1. VIDEO DEL HEADER ==========
-    if (data.header_video) {
-        const video = document.getElementById("hero-video");
-        if (video) {
-            video.innerHTML = `
-                <source src="${data.header_video}" type="video/mp4">
-            `;
-            video.load();
+   // ========== 1. VIDEO DEL HEADER ==========
+if (data.header_video) {
+    const video = document.getElementById("hero-video");
+    if (video) {
+
+        // Asegurar que el video está detenido
+        try { video.pause(); } catch(e) {}
+
+        // Remover todos los <source> anteriores
+        while (video.firstChild) {
+            video.removeChild(video.firstChild);
         }
+
+        // Crear nuevo <source>
+        const source = document.createElement("source");
+        source.src = data.header_video;
+        source.type = "video/mp4";
+
+        video.appendChild(source);
+
+        // Forzar recarga correcta del nuevo archivo
+        video.load();
+
+        // Volver a iniciar reprodución en silencio
+        video.muted = true;
+        video.play().catch(err => console.warn("Error auto-play:", err));
     }
+}
 
     // ========== 2. SERVICIOS (4 IMÁGENES) ==========
     const serviciosImgs = document.querySelectorAll(".servicios-imagenes .img-box img");
