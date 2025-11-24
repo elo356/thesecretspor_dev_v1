@@ -144,16 +144,20 @@
 
     <div class="grid">
         <!-- VIDEO HEADER -->
-        <section class="card">
-            <h2>Video del Header</h2>
-            <small>Introduce la URL del video (Cloudinary, YouTube, etc.)</small>
-            <div class="field" style="margin-top:10px;">
-                <label for="headerVideoUrl">URL del video</label>
-                <input type="text" id="headerVideoUrl" placeholder="https://...">
-            </div>
-            <button onclick="saveHeaderVideo()">Guardar video</button>
-            <div id="headerVideoPreview" style="margin-top:10px;"></div>
-        </section>
+  <section class="card">
+    <h2>Video del Header</h2>
+    <small>Sube un video .mp4 para el header</small>
+
+    <div class="field" style="margin-top:10px;">
+        <label for="videoHeaderFile">Seleccionar video</label>
+        <input type="file" id="videoHeaderFile" accept="video/mp4">
+    </div>
+
+    <button onclick="uploadVideo()">Subir Video</button>
+
+    <div id="headerVideoPreview" style="margin-top:10px;"></div>
+</section>
+
 
         <!-- SOBRE NOSOTROS -->
         <section class="card">
@@ -355,6 +359,27 @@ async function uploadImage(section, fileInputId) {
         alert("Error al subir la imagen");
         setStatus("Error al subir la imagen.");
     }
+}
+async function uploadVideo() {
+    const file = document.getElementById("videoHeaderFile").files[0];
+
+    if (!file) {
+        alert("Selecciona un archivo de video");
+        return;
+    }
+
+    const form = new FormData();
+    form.append("file", file);
+
+    const res = await fetch(`${API}/upload-video`, {
+        method: "POST",
+        body: form
+    });
+
+    const json = await res.json();
+
+    alert("Video subido correctamente");
+    fetchContent(); // recargar el panel
 }
 
 async function deleteImage(section, url) {

@@ -73,6 +73,27 @@ async def update_header_video(video_url: str = Form(...)):
     save_content(data)
     return {"message": "ok", "url": video_url}
 
+@app.post("/upload-video")
+async def upload_video(file: UploadFile = File(...)):
+    if not file:
+        raise HTTPException(400, "No se subió un archivo")
+
+    # Subir como VIDEO a Cloudinary
+    upload = cloudinary.uploader.upload(
+        file.file,
+        resource_type="video"  # 👈 ESTO ES LA CLAVE
+    )
+
+    url = upload.get("secure_url")
+
+    # Guardar en el JSON
+    data = load_content()
+    data["header_video"] = url
+    save_content(data)
+
+    return {"message": "ok", "url": url}
+
+
 # ============ ENDPOINT: SUBIR IMAGEN (GENERAL + GALERÍA) ============
 @app.post("/upload-image")
 async def upload_image(
