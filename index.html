@@ -83,7 +83,23 @@
             </div>
         </div>
     </section>
+<div id="galeria"></div>
 
+<script>
+async function cargarImagenes() {
+    const res = await fetch("https://thesecretspot.onrender.com/content");
+    const data = await res.json();
+
+    const cont = document.getElementById("galeria");
+    cont.innerHTML = "";
+
+    data.galeria.forEach(url => {
+        cont.innerHTML += `<img src="${url}" style="width:200px;margin:5px;">`;
+    });
+}
+
+cargarImagenes();
+</script>
         <script>
         (function(){
             const video = document.getElementById('hero-video');
@@ -1170,171 +1186,4 @@ filterButtons.forEach(button => {
             headerEl.classList.toggle('nav-open');
         }
     </script>
-
-
-<script>
-// ================================
-// CONFIGURACIÓN
-// ================================
-const API_BASE = "https://thesecretspot-api.onrender.com/api"; // <--- CAMBIA ESTO
-// ================================
-
-
-// ==========================================
-// 1. Cargar contenido inicial desde la API
-// ==========================================
-async function loadContent() {
-    try {
-        const res = await fetch(`${API_BASE}/content`);
-        const data = await res.json();
-
-        // -------------------------------------------------
-        //  HERO VIDEO
-        // -------------------------------------------------
-        if (data.heroVideo) {
-            const heroVideo = document.querySelector("#hero-video source");
-            if (heroVideo) {
-                heroVideo.src = data.heroVideo;
-                heroVideo.parentElement.load();
-            }
-        }
-
-        // -------------------------------------------------
-        //  SLOTS (IMÁGENES FIJAS)
-        // -------------------------------------------------
-        const slots = data.slots;
-
-        // SERVICIOS
-        if (slots.servicio_1) document.querySelector('[src*="hombre3.jpg"]').src = slots.servicio_1;
-        if (slots.servicio_2) document.querySelector('[src*="mujer3.jpg"]').src = slots.servicio_2;
-        if (slots.servicio_3) document.querySelector('[src*="nino3.jpg"]').src = slots.servicio_3;
-        if (slots.servicio_4) document.querySelector('[src*="pedicura.jpg"]').src = slots.servicio_4;
-
-        // SOBRE NOSOTROS
-        if (slots.about_img) document.querySelector('.about-image img').src = slots.about_img;
-
-        // FOTO GRUPAL
-        if (slots.team_group) document.querySelector('.team-group-photo img').src = slots.team_group;
-
-        // STAFF (6 fotos)
-        const staffImgs = document.querySelectorAll('.team-photos img');
-        const staffKeys = ["staff_1","staff_2","staff_3","staff_4","staff_5","staff_6"];
-
-        staffImgs.forEach((img, i) => {
-            if (slots[staffKeys[i]]) img.src = slots[staffKeys[i]];
-        });
-
-        // -------------------------------------------------
-        //  GALERÍA
-        // -------------------------------------------------
-        generateGallery(data.gallery);
-
-    } catch (err) {
-        console.error("Error cargando contenido API:", err);
-    }
-}
-
-
-
-// ==========================================
-// 2. Generar galería dinámicamente
-// ==========================================
-function generateGallery(items) {
-    const grid = document.querySelector(".gallery-grid");
-    if (!grid) return;
-
-    // limpiar galería actual
-    grid.innerHTML = "";
-
-    items.forEach(item => {
-        const div = document.createElement("div");
-        div.className = "gallery-item";
-        div.dataset.category = item.category;
-
-        div.innerHTML = `
-            <span class="gallery-category">${capitalize(item.category)}</span>
-            <img src="${item.url}" alt="" loading="lazy">
-            <div class="gallery-overlay">
-                <div>
-                    <h4>${titleFromCategory(item.category)}</h4>
-                    <p>${descFromCategory(item.category)}</p>
-                </div>
-            </div>
-        `;
-
-        grid.appendChild(div);
-    });
-
-    // reactivar botones de filtro
-    setupGalleryFilters();
-}
-
-
-
-// ==========================================
-// 3. Helpers para etiquetas de categoría
-// ==========================================
-function capitalize(str) {
-    return str.charAt(0).toUpperCase() + str.slice(1);
-}
-
-function titleFromCategory(cat) {
-    switch (cat) {
-        case "damas": return "Corte Damas";
-        case "caballeros": return "Corte Caballeros";
-        case "ninos": return "Corte Niños";
-        case "manicura": return "Manicura";
-        case "pedicura": return "Pedicura";
-        default: return cat;
-    }
-}
-
-function descFromCategory(cat) {
-    switch (cat) {
-        case "damas": return "Trabajo para damas";
-        case "caballeros": return "Trabajo para caballeros";
-        case "ninos": return "Trabajo para niños";
-        case "manicura": return "Servicio de manicura";
-        case "pedicura": return "Servicio de pedicura";
-        default: return "";
-    }
-}
-
-
-
-// ==========================================
-// 4. Activar filtros de galería
-// ==========================================
-function setupGalleryFilters() {
-    const filterButtons = document.querySelectorAll('.filter-btn');
-    const galleryItems = document.querySelectorAll('.gallery-item');
-
-    filterButtons.forEach(button => {
-        button.addEventListener('click', function () {
-            filterButtons.forEach(btn => btn.classList.remove('active'));
-            this.classList.add('active');
-
-            const filterValue = this.getAttribute('data-filter');
-
-            galleryItems.forEach(item => {
-                if (filterValue === "all" || item.dataset.category === filterValue) {
-                    item.style.display = "block";
-                } else {
-                    item.style.display = "none";
-                }
-            });
-        });
-    });
-}
-
-
-
-// ==========================================
-// 5. Inicializar al cargar la página
-// ==========================================
-document.addEventListener("DOMContentLoaded", loadContent);
-</script>
-
-
-</body>
 </html>
