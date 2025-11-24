@@ -161,3 +161,20 @@ def delete_image(section: str, url: str):
     save_content(data)
 
     return {"message": "Imagen eliminada correctamente"}
+from cloudinary.api import usage
+
+@app.get("/cloudinary-usage")
+def cloudinary_usage():
+    try:
+        u = usage()
+        return {
+            "storage": {
+                "image": u["storage"]["image"]["usage"],
+                "video": u["storage"]["video"]["usage"],
+                "raw": u["storage"]["raw"]["usage"],
+                "total": u["storage"]["total"]["usage"],
+                "limit": u["storage"]["total"]["limit"]
+            }
+        }
+    except Exception as e:
+        raise HTTPException(500, f"Error al obtener uso: {str(e)}")

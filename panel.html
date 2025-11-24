@@ -158,6 +158,10 @@
     <div id="headerVideoPreview" style="margin-top:10px;"></div>
 </section>
 
+<section class="card">
+    <h2>Uso de almacenamiento</h2>
+    <div id="storageStatus">Cargando...</div>
+</section>
 
         <!-- SOBRE NOSOTROS -->
         <section class="card">
@@ -288,24 +292,16 @@ function renderAll() {
 
 // ================== HEADER VIDEO ===================
 function renderHeaderVideo() {
-    const input = document.getElementById("headerVideoUrl");
     const preview = document.getElementById("headerVideoPreview");
-    input.value = state.header_video || "";
     preview.innerHTML = "";
 
     if (state.header_video) {
-        // Si parece un mp4, intentamos <video>, si no, solo link
-        if (state.header_video.endsWith(".mp4") || state.header_video.includes("res.cloudinary.com")) {
-            preview.innerHTML = `
-                <video src="${state.header_video}" controls style="width:100%; max-width:400px; border-radius:6px;"></video>
-            `;
-        } else {
-            preview.innerHTML = `
-                <a href="${state.header_video}" target="_blank">${state.header_video}</a>
-            `;
-        }
+        preview.innerHTML = `
+            <video src="${state.header_video}" controls style="width:100%; max-width:400px; border-radius:6px;"></video>
+        `;
     }
 }
+
 
 async function saveHeaderVideo() {
     const url = document.getElementById("headerVideoUrl").value.trim();
@@ -360,6 +356,30 @@ async function uploadImage(section, fileInputId) {
         setStatus("Error al subir la imagen.");
     }
 }
+async function loadStorageInfo() {
+    try {
+        const res = await fetch(`${API}/cloudinary-usage`);
+        const data = await res.json();
+
+        const used = data.storage.total;
+        const limit = data.storage.limit;
+
+        const percent = ((used / limit) * 100).toFixed(1);
+
+        document.getElementById("storageStatus").innerHTML = `
+            <strong>Usado:</strong> ${(used / 1_000_000).toFixed(1)} MB<br>
+            <strong>Límite:</strong> ${(limit / 1_000_000).toFixed(1)} MB<br>
+            <strong>Porcentaje:</strong> ${percent}%<br>
+            <div style="margin-top:6px; width:100%; height:10px; background:#ddd; border-radius:6px;">
+                <div style="width:${percent}%; height:100%; background:#111827; border-radius:6px;"></div>
+            </div>
+        `;
+    } catch (err) {
+        document.getElementById("storageStatus").textContent = "Error al cargar datos.";
+        console.error(err);
+    }
+}
+
 async function uploadVideo() {
     const file = document.getElementById("videoHeaderFile").files[0];
 
@@ -555,6 +575,8 @@ function renderGaleria() {
 
 // ================== INICIO ===================
 fetchContent();
+loadStorageInfo();
+
 </script>
 </body>
 </html>
