@@ -356,29 +356,6 @@ async function uploadImage(section, fileInputId) {
         setStatus("Error al subir la imagen.");
     }
 }
-async function loadStorageInfo() {
-    try {
-        const res = await fetch(`${API}/cloudinary-usage`);
-        const data = await res.json();
-
-        const used = data.storage.total;
-        const limit = data.storage.limit;
-
-        const percent = ((used / limit) * 100).toFixed(1);
-
-        document.getElementById("storageStatus").innerHTML = `
-            <strong>Usado:</strong> ${(used / 1_000_000).toFixed(1)} MB<br>
-            <strong>Límite:</strong> ${(limit / 1_000_000).toFixed(1)} MB<br>
-            <strong>Porcentaje:</strong> ${percent}%<br>
-            <div style="margin-top:6px; width:100%; height:10px; background:#ddd; border-radius:6px;">
-                <div style="width:${percent}%; height:100%; background:#111827; border-radius:6px;"></div>
-            </div>
-        `;
-    } catch (err) {
-        document.getElementById("storageStatus").textContent = "Error al cargar datos.";
-        console.error(err);
-    }
-}
 
 async function uploadVideo() {
     const file = document.getElementById("videoHeaderFile").files[0];
@@ -575,8 +552,6 @@ function renderGaleria() {
 
 // ================== INICIO ===================
 fetchContent();
-loadStorageInfo();
-
 </script>
 </body>
 </html>
