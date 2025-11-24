@@ -817,8 +817,7 @@ section {
 .team .team-group-photo .image-frame,
 .team .staff-photo {
     border-color: rgba(255,255,255,0.12);
-    margin-top: 30px;
-    margin-bottom: 50px;
+
 }
 
 .team-hero img:hover {
@@ -1415,25 +1414,4 @@ footer {
     .hero h1 { font-size: 1.6rem; }
     .nav-links a { font-size: 0.66rem; padding: 0.12rem 0.3rem; }
     .nav-links { gap: 0.18rem; }
-}
-
-/* Ensure language toggle matches nav option sizing on mobile */
-@media (max-width: 900px) {
-    .lang-toggle {
-        padding: 0.2rem 0.35rem;
-        font-size: 0.72rem;
-        border-width: 1px;
-        border-radius: 6px;
-        gap: 6px;
-        height: auto;
-        line-height: 1;
-    }
-    .lang-toggle i.fas { font-size: 0.95em; }
-    .lang-menu li { padding: 8px 12px; font-size: 0.85rem; }
-}
-
-@media (max-width: 420px) {
-    .lang-toggle { font-size: 0.66rem; padding: 0.12rem 0.3rem; }
-    .lang-toggle i.fas { font-size: 0.9em; }
-    .lang-menu li { padding: 8px 10px; font-size: 0.78rem; }
 }

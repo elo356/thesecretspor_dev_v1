@@ -897,94 +897,15 @@ langMenuItems.forEach(item => {
 
 <!-- Script: autoplay / sonido condicional para el hero video -->
 <script>
-// Nota: muchos navegadores móviles bloquean autoplay con sonido.
-// Estrategia: reproducir siempre en muted (permitido), y cuando el video
-// entre en vista intentamos desmutear y reproducir con sonido. Si el navegador
-// rechaza el play por política, escuchamos un primer toque del usuario para
-// intentar desmutear mientras el video esté visible. No añadimos botones visibles.
-(function(){
+// Simple autoplay: the <video> element has `autoplay muted loop playsinline`.
+// We try to play once on DOMContentLoaded to kickstart playback in browsers
+// that allow muted autoplay. We do NOT attempt to unmute or force audio.
+document.addEventListener('DOMContentLoaded', function(){
     const vid = document.getElementById('hero-video');
-    if(!vid) return;
-
-    // Asegurar atributos mínimos
-    vid.playsInline = true;
-    vid.loop = true;
-    vid.muted = true; // inicio silenciado para permitir autoplay
-
-    // Try to start muted playback now and also after load events
-    const startMutedPlay = () => { const p = vid.play(); if(p && p.catch) p.catch(()=>{}); };
-    try { startMutedPlay(); } catch(e) {}
-    window.addEventListener('DOMContentLoaded', startMutedPlay);
-    window.addEventListener('load', startMutedPlay);
-
-    // Observer: monitor the whole hero section (#inicio) so audio stays on
-    // until the section is mostly out of view. We use a low threshold so the
-    // sound mutes "más abajo" (only when visibility drops under ~15%).
-    const heroEl = document.getElementById('inicio') || vid;
-    const observer = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-            // Keep audio active while at least ~15% of the hero is visible
-            if (entry.isIntersecting && entry.intersectionRatio > 0.15) {
-                vid.muted = false;
-                vid.volume = 0.6;
-                const promise = vid.play();
-                if (promise && promise.catch) promise.catch(() => { vid.muted = true; attachInteractionFallback(); });
-            } else {
-                // Once the hero is mostly out of view, mute the video
-                vid.muted = true;
-            }
-        });
-    }, { threshold: [0, 0.15, 0.25, 0.5, 0.75, 1] });
-
-    observer.observe(heroEl);
-
-    function attachInteractionFallback(){
-        const onInteraction = function(){
-            vid.muted = false; vid.volume = 0.7; vid.play().catch(()=>{});
-            window.removeEventListener('touchstart', onInteraction);
-            window.removeEventListener('click', onInteraction);
-        };
-        window.addEventListener('touchstart', onInteraction, { once: true });
-        window.addEventListener('click', onInteraction, { once: true });
-    }
-
-    // If the video ever ends up paused unexpectedly on mobile, try to recover
-    vid.addEventListener('pause', () => {
-        if (document.hidden) return; // don't fight when page is hidden
-        // try several times with small backoff
-        let attempts = 0;
-        const tryPlay = () => {
-            if (attempts++ > 8) return;
-            vid.play().catch(() => {
-                setTimeout(tryPlay, 300 + attempts * 150);
-            });
-        };
-        tryPlay();
-    });
-
-    // On scroll, ensure playback is resumed if it was paused
-    let scrollTimer = null;
-    window.addEventListener('scroll', () => {
-        if (scrollTimer) clearTimeout(scrollTimer);
-        scrollTimer = setTimeout(() => {
-            if (!document.hidden && vid.paused) {
-                vid.play().catch(()=>{});
-            }
-        }, 120);
-    }, { passive: true });
-
-    // When tab becomes visible again, try to ensure the video plays (muted)
-    document.addEventListener('visibilitychange', () => {
-        if (document.hidden) {
-            vid.muted = true;
-        } else {
-            // try to resume playback silently
-            vid.muted = true;
-            vid.play().catch(()=>{});
-        }
-    });
-
-})();
+    if (!vid) return;
+    vid.muted = true;
+    try { vid.play(); } catch(e) { /* ignore */ }
+});
 </script>
 
 
