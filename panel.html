@@ -424,7 +424,7 @@ function renderAll() {
 function renderHeaderVideo() {
     const p = document.getElementById("headerVideoPreview");
     p.innerHTML = state.header_video
-        ? `<video src="${state.header_video}" controls style="width:100%;max-width:400px;border-radius:6px;"></video>`
+        ? `<video src="${API}${state.header_video}" controls style="width:100%;max-width:400px;border-radius:6px;"></video>`
         : "";
 }
 
