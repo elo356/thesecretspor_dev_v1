@@ -156,6 +156,22 @@
     <button onclick="uploadVideo()">Subir Video</button>
 
     <div id="headerVideoPreview" style="margin-top:10px;"></div>
+    <div id="uploadLoader" style="
+    display:none;
+    position:fixed;
+    top:0; left:0;
+    width:100%; height:100%;
+    background:rgba(0,0,0,0.55);
+    backdrop-filter: blur(2px);
+    z-index:9999;
+    color:white;
+    font-size:22px;
+    text-align:center;
+    padding-top:40vh;
+">
+    ⏳ Subiendo archivo, por favor espere...
+</div>
+
 </section>
 
 <button onclick="logout()" style="float:right; margin-top:10px;">Cerrar sesión</button>
@@ -295,60 +311,80 @@ async function fetchContent() {
 async function uploadImage(section, fileInputId) {
     const input = document.getElementById(fileInputId);
     const file = input.files[0];
-    if (!file) return alert("Selecciona un archivo");
+    if (!file) {
+        alert("Selecciona un archivo");
+        return;
+    }
+
+    showLoader("Subiendo imagen...");
 
     const form = new FormData();
     form.append("section", section);
     form.append("file", file);
 
-    // enviar categoria vacía siempre (FastAPI lo requiere)
-    form.append("categoria", "");
-
     try {
-        setStatus("Subiendo imagen...");
-        const res = await authorizedFetch(`${API}/upload-image`, {
+        const res = await fetch(`${API}/upload-image`, {
             method: "POST",
             body: form
         });
 
-        if (!res.ok) {
-            const err = await res.text();
-            throw new Error(err);
-        }
+        hideLoader();
+
+        if (!res.ok) throw new Error("Error subiendo imagen");
 
         input.value = "";
         await fetchContent();
         alert("Imagen subida correctamente");
+        
     } catch (err) {
+        hideLoader();
         console.error(err);
         alert("Error al subir la imagen");
-        setStatus("Error al subir la imagen.");
     }
 }
-
 async function uploadVideo() {
     const file = document.getElementById("videoHeaderFile").files[0];
-    if (!file) return alert("Selecciona un video");
+
+    if (!file) {
+        alert("Selecciona un archivo de video");
+        return;
+    }
+
+    showLoader("Subiendo video (esto puede tardar)...");
 
     const form = new FormData();
     form.append("file", file);
 
     try {
-        setStatus("Subiendo video...");
-
-        const res = await authorizedFetch(`${API}/upload-video`, {
+        const res = await fetch(`${API}/upload-video`, {
             method: "POST",
             body: form
         });
+
+        hideLoader();
 
         if (!res.ok) throw new Error("Error subiendo video");
 
         alert("Video subido correctamente");
         fetchContent();
-    } catch {
-        alert("Error subiendo el video");
+
+    } catch (err) {
+        hideLoader();
+        console.error(err);
+        alert("Error al subir el video");
     }
 }
+function showLoader(msg = "Procesando...") {
+    const loader = document.getElementById("uploadLoader");
+    loader.textContent = "⏳ " + msg;
+    loader.style.display = "block";
+}
+
+function hideLoader() {
+    const loader = document.getElementById("uploadLoader");
+    loader.style.display = "none";
+}
+
 
 // ==============================================
 // ELIMINAR IMAGEN
