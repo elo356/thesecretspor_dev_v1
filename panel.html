@@ -384,6 +384,10 @@ function hideLoader() {
     const loader = document.getElementById("uploadLoader");
     loader.style.display = "none";
 }
+function logout() {
+    localStorage.removeItem("panel_token");
+    window.location.href = "login.html";
+}
 
 
 // ==============================================
