@@ -1187,35 +1187,33 @@ async function cargarContenido() {
     // 1. VIDEO DEL HEADER
     // -----------------------------------------
    // 1. VIDEO DEL HEADER — carga estable
+// 1. VIDEO DEL HEADER — carga estable
+// 1. VIDEO DEL HEADER — carga estable y universal
 if (data.header_video) {
     const video = document.getElementById("hero-video");
 
-    // Si ya tiene el mismo video cargado → NO lo recargues
-    const currentSrc = video.querySelector("source")?.src || "";
-
-    if (!currentSrc.includes(data.header_video)) {
+    // Si ya está el mismo video, no recargar
+    if (!video.src.includes(data.header_video)) {
 
         video.pause();
 
-        // Cambia solo el SRC sin borrar el elemento
-        const source = video.querySelector("source");
-        source.src = data.header_video;
+        // 🔥 La clave: asignar el .src directo al <video>
+        video.src = data.header_video;
 
-        // Cargar correctamente
         video.load();
-
         video.muted = true;
 
-        // Intentar autoplay varias veces (Chrome/SAFARI fix)
+        // Intentar autoplay (chrome/safari fix)
         const tryPlay = () => {
             video.play().catch(() => {
-                setTimeout(tryPlay, 300);  
+                setTimeout(tryPlay, 350);
             });
         };
 
         tryPlay();
     }
 }
+
 
 
     // -----------------------------------------
