@@ -1190,22 +1190,24 @@ async function cargarContenido() {
 // 1. VIDEO DEL HEADER — carga estable
 // 1. VIDEO DEL HEADER — carga estable y universal
 if (data.header_video) {
+    const newVideoURL = `${API}${data.header_video}`;
+    console.log("Cambiando video a:", newVideoURL);
+
     const video = document.getElementById("hero-video");
 
-    // Si ya está el mismo video, no recargar
     if (!video.src.includes(data.header_video)) {
+        console.log("Nuevo video detectado, recargando...");
 
         video.pause();
-
-        // 🔥 La clave: asignar el .src directo al <video>
-        video.src = data.header_video;
-
+        video.src = newVideoURL;   // 🔥 Fix aquí
         video.load();
         video.muted = true;
 
-        // Intentar autoplay (chrome/safari fix)
         const tryPlay = () => {
-            video.play().catch(() => {
+            video.play().then(() => {
+                console.log("Video reproduciéndose correctamente.");
+            }).catch(err => {
+                console.log("Error al reproducir:", err);
                 setTimeout(tryPlay, 350);
             });
         };
@@ -1213,6 +1215,7 @@ if (data.header_video) {
         tryPlay();
     }
 }
+
 
 
 
