@@ -1448,3 +1448,24 @@ footer {
         border-radius: 50px;
     }
 }
+
+/* Ensure language toggle isn't cut off on mobile: place it to the left and make it compact */
+@media (max-width: 900px) {
+    .nav-links { align-items: center; }
+    .lang-dropdown { order: -1; margin-right: auto; }
+    .lang-toggle {
+        padding: 4px 8px;
+        font-size: 0.78rem;
+        border-radius: 6px;
+        gap: 6px;
+        border-width: 1px;
+    }
+    .lang-menu { left: 0; right: auto; top: 42px; min-width: 90px; }
+}
+
+@media (max-width: 420px) {
+    .lang-dropdown { order: -1; margin-right: 0.25rem; }
+    .lang-toggle { padding: 3px 6px; font-size: 0.66rem; gap: 4px; }
+    .lang-menu { top: 38px; left: 0; right: auto; min-width: 72px; }
+    .lang-menu li { padding: 8px 10px; font-size: 0.78rem; }
+}
