@@ -284,10 +284,11 @@
             En The Secret Spot PR contamos con un equipo talentoso, dedicado y apasionado por el arte del grooming y la belleza. Cada uno de nuestros profesionales aporta experiencia, creatividad y un trato humano excepcional para garantizar una experiencia única a cada cliente. Nuestro equipo combina habilidades en barbería, estilismo, diseño de imagen, uñas, pedicura y servicios de color, brindando un ambiente moderno, familiar y orientado al detalle. Juntos trabajamos con la misión de elevar la confianza de cada persona que entra por nuestras puertas, ofreciendo un servicio de excelencia y manteniendo siempre la esencia y el concepto de nuestro salón.
         </p>
 
-        <!-- Fotos individuales en forma circular, sin información -->
-       <!-- ===================== TEAM SECTION ===================== -->
+        <!-- Título para la sección de fotos del equipo -->
+        <h2 class="team-photos-title" style="text-align:center; font-size:3.1rem; font-weight:700; margin:2.5rem 0 1.2rem 0; color:#fff; letter-spacing:0.5px;">Conoce a nuestro equipo</h2>
 
-<div class="team-photos">
+        <!-- Fotos individuales en forma circular -->
+        <div class="team-photos">
 
 <div class="staff-photo" 
      data-name="Zuleina Paredes"
@@ -400,13 +401,12 @@ Un profesional serio, con esencia juvenil y un talento que continúa creciendo."
 <div id="staffModal" class="modal">
     <div class="modal-content">
         <span class="modal-close">&times;</span>
-
+        <span class="modal-nav modal-nav-left" style="position:absolute;left:10px;top:50%;transform:translateY(-50%);font-size:2.2rem;cursor:pointer;color:#444;user-select:none;z-index:10;">&#8592;</span>
+        <span class="modal-nav modal-nav-right" style="position:absolute;right:10px;top:50%;transform:translateY(-50%);font-size:2.2rem;cursor:pointer;color:#444;user-select:none;z-index:10;">&#8594;</span>
         <img id="modalImg" class="modal-photo">
-
         <h2 id="modalName"></h2>
         <h4 id="modalRole"></h4>
         <p id="modalInfo"></p>
-
         <a href="https://booksy.com/en-us/491030_the-secret-spot-ladies-mens-grooming-isabela-p-r_hair-salon_107155_isabela"
            target="_blank"
            class="btn-agendar-modal">Agendar Cita</a>
@@ -756,20 +756,51 @@ document.addEventListener('DOMContentLoaded', function() {
     const modalRole = document.getElementById('modalRole');
     const modalInfo = document.getElementById('modalInfo');
     const modalClose = document.querySelector('.modal-close');
+    const navLeft = document.querySelector('.modal-nav-left');
+    const navRight = document.querySelector('.modal-nav-right');
 
-    staffPhotos.forEach(photo => {
+    // Array de datos de los miembros
+    const teamData = Array.from(staffPhotos).map(photo => ({
+        name: photo.getAttribute('data-name') || '',
+        role: photo.getAttribute('data-role') || '',
+        info: photo.getAttribute('data-info') || '',
+        img: photo.getAttribute('data-img') || ''
+    }));
+    let currentIdx = 0;
+
+    function showModal(idx) {
+        const member = teamData[idx];
+        if (!member) return;
+        // Animación fade
+        const content = modal.querySelector('.modal-content');
+        content.classList.remove('modal-anim');
+        void content.offsetWidth; // reflow para reiniciar animación
+        content.classList.add('modal-anim');
+        // Actualiza datos
+        modalImg.src = member.img;
+        modalImg.alt = member.name;
+        modalName.textContent = member.name;
+        modalRole.textContent = member.role;
+        modalInfo.innerHTML = member.info.replace(/\n/g, '<br>');
+        modal.classList.add('show');
+        currentIdx = idx;
+    }
+
+    staffPhotos.forEach((photo, idx) => {
         photo.addEventListener('click', function() {
-            const name = this.getAttribute('data-name') || '';
-            const role = this.getAttribute('data-role') || '';
-            const info = this.getAttribute('data-info') || '';
-            const img = this.getAttribute('data-img') || '';
-            modalImg.src = img;
-            modalImg.alt = name;
-            modalName.textContent = name;
-            modalRole.textContent = role;
-            modalInfo.innerHTML = info.replace(/\n/g, '<br>');
-            modal.classList.add('show');
+            showModal(idx);
         });
+    });
+
+    navLeft.addEventListener('click', function(e) {
+        e.stopPropagation();
+        let prevIdx = (currentIdx - 1 + teamData.length) % teamData.length;
+        showModal(prevIdx);
+    });
+    navRight.addEventListener('click', function(e) {
+        e.stopPropagation();
+        let nextIdx = (currentIdx + 1) % teamData.length;
+        showModal(nextIdx);
     });
 
     modalClose.addEventListener('click', function() {
