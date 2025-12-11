@@ -190,76 +190,68 @@
     <img src="images/trabajos/nino3.jpg" alt="Servicios">
     <img src="images/trabajos/pedicura.jpg" alt="Servicios">
 </div>
-  <!-- BARBERÍA CABALLEROS -->
-  <h3 class="categoria-titulo">BARBERÍA – CABALLEROS</h3>
 
-  <div class="servicios-grid">
-
-    <div class="servicio-box">
-      <h4>Cortes en Tendencia</h4>
-      <p>Estilos modernos, limpios y definidos.</p>
+    <!-- MANOS Y PIES / SPA -->
+    <div class="servicios-doble">
+        <div class="columna">
+            <h3 class="categoria-titulo">MANOS & PIES</h3>
+            <div class="servicio-box">
+                <h4>Manicura Profesional</h4>
+                <p>Acabado limpio y duradero.</p>
+            </div>
+            <div class="servicio-box">
+                <h4>Pedicura Spa</h4>
+                <p>Relajación, suavidad y cuidado profundo.</p>
+            </div>
+        </div>
+        <div class="columna">
+            <h3 class="categoria-titulo">SPA & BIENESTAR</h3>
+            <div class="servicio-box">
+                <h4>Faciales Revitalizantes</h4>
+                <p>Limpieza profunda y piel renovada.</p>
+            </div>
+        </div>
     </div>
 
-    <div class="servicio-box">
-      <h4>Cortes y Estilos Modernos</h4>
-      <p>Looks elegantes que resaltan tu belleza.</p>
+    <!-- ESTILISMO DAMAS -->
+    <h3 class="categoria-titulo">ESTILISMO – DAMAS</h3>
+    <div class="servicios-grid">
+        <div class="servicio-box">
+            <h4>Cortes y Estilos Modernos</h4>
+            <p>Looks elegantes que resaltan tu belleza.</p>
+        </div>
+        <div class="servicio-box">
+            <h4>Blowout Bar</h4>
+            <p>Volumen, brillo y acabado pulido.</p>
+        </div>
     </div>
 
-    <div class="servicio-box">
-      <h4>Arreglo de Barba</h4>
-      <p>Diseño y terminaciones profesionales.</p>
+    <!-- BARBERÍA CABALLEROS -->
+    <h3 class="categoria-titulo">BARBERÍA – CABALLEROS</h3>
+    <div class="servicios-grid">
+        <div class="servicio-box">
+            <h4>Cortes en Tendencia</h4>
+            <p>Estilos modernos, limpios y definidos.</p>
+        </div>
+        <div class="servicio-box">
+            <h4>Cortes y Estilos Modernos</h4>
+            <p>Looks elegantes que resaltan tu belleza.</p>
+        </div>
+        <div class="servicio-box">
+            <h4>Arreglo de Barba</h4>
+            <p>Diseño y terminaciones profesionales.</p>
+        </div>
+        <div class="servicio-box">
+            <h4>Color & Highlights</h4>
+            <p>Acabado vibrante, saludable y profesional.</p>
+        </div>
     </div>
 
-    <div class="servicio-box">
-      <h4>Color & Highlights</h4>
-      <p>Acabado vibrante, saludable y profesional.</p>
-    </div>
-  </div>
-
-  <!-- ESTILISMO DAMAS -->
-  <h3 class="categoria-titulo">ESTILISMO – DAMAS</h3>
-
-  <div class="servicios-grid">
-    <div class="servicio-box">
-      <h4>Cortes y Estilos Modernos</h4>
-      <p>Looks elegantes que resaltan tu belleza.</p>
+    <p class="frase" style="margin-top:2.5rem;text-align:center;font-size:1.15rem;color:#726c66;font-weight:600;">“Los detalles hacen la diferencia.” — BELIEVE</p>
+        </div>
     </div>
 
-    <div class="servicio-box">
-      <h4>Blowout Bar</h4>
-      <p>Volumen, brillo y acabado pulido.</p>
-    </div>
-  </div>
 
-  <!-- MANOS Y PIES / SPA -->
-  <div class="servicios-doble">
-
-    <div class="columna">
-      <h3 class="categoria-titulo">MANOS & PIES</h3>
-
-      <div class="servicio-box">
-        <h4>Manicura Profesional</h4>
-        <p>Acabado limpio y duradero.</p>
-      </div>
-
-      <div class="servicio-box">
-        <h4>Pedicura Spa</h4>
-        <p>Relajación, suavidad y cuidado profundo.</p>
-      </div>
-    </div>
-
-    <div class="columna">
-      <h3 class="categoria-titulo">SPA & BIENESTAR</h3>
-
-      <div class="servicio-box">
-        <h4>Faciales Revitalizantes</h4>
-        <p>Limpieza profunda y piel renovada.</p>
-      </div>
-
-      <p class="frase">“Los detalles hacen la diferencia.” — BELIEVE</p>
-    </div>
-
-  </div>
 
 </section>
 
@@ -915,7 +907,7 @@ const langText = {
         hint_text: "Simple, rápido y seguro.",
         payment_title: "Métodos de Pago",
         footer_copy: "© 2024 The Secret Spot - Grooming Studio. Todos los derechos reservados.",
-        footer_location: "Isabela, Puerto Rico | Estilismo Premium Desde 2019"
+        footer_location: "Isabela, Puerto Rico | Estilismo Premium Desde 2019",
     },
     en: {
         team_title: "Meet Our Team",
@@ -982,7 +974,7 @@ const langText = {
         hint_text: "Simple, fast and secure.",
         payment_title: "Payment Methods",
         footer_copy: "© 2024 The Secret Spot - Grooming Studio. All rights reserved.",
-        footer_location: "Isabela, Puerto Rico | Premium Styling Since 2019"
+        footer_location: "Isabela, Puerto Rico | Premium Styling Since 2019",
     }
 };
 
@@ -1016,6 +1008,33 @@ const translationMap = [
 ];
 
 function updateLanguage(lang) {
+        // Traducción de reseñas del equipo en el modal
+        const staffModal = document.getElementById('staffModal');
+        if (staffModal && staffModal.classList.contains('show')) {
+            const modalName = staffModal.querySelector('#modalName');
+            const modalRole = staffModal.querySelector('#modalRole');
+            const modalInfo = staffModal.querySelector('#modalInfo');
+            const modalBtn = staffModal.querySelector('.btn-agendar-modal');
+            // Traducciones (ejemplo, puedes expandir con más miembros)
+            const staffTranslations = {
+                'Zuleina Paredes': {
+                    en: {
+                        name: 'Zuleina Paredes',
+                        role: 'Nail Technician & Pedicure Specialist',
+                        info: 'With over six years of experience, Zuleina Paredes—affectionately known as Zuly—is one of the most outstanding professionals in the art of manicures and pedicures at The Secret Spot PR. Her precision, attention to detail, and technical excellence have made her a reference for clients seeking beauty, wellness, and lasting results. Perfectionist and dedicated, Zuly masters techniques in acrylic, gel, artistic design, and professional pedicure. Beyond her skill, Zuleina is recognized for her exceptional treatment, warmth, and the peaceful atmosphere she provides. Professional, kind, and deeply responsible, she is an essential pillar within the salon.'
+                    }
+                }
+                // Agrega más miembros aquí si lo deseas
+            };
+            if (modalName && staffTranslations[modalName.textContent] && lang === 'en') {
+                modalName.textContent = staffTranslations[modalName.textContent].en.name;
+                modalRole.textContent = staffTranslations[modalName.textContent].en.role;
+                modalInfo.textContent = staffTranslations[modalName.textContent].en.info;
+            }
+            if (modalBtn) {
+                modalBtn.textContent = (lang === 'en') ? 'Book Appointment' : 'Agendar Cita';
+            }
+        }
     currentLang = lang;
     localStorage.setItem('tss_lang', lang);
 
@@ -1034,6 +1053,126 @@ function updateLanguage(lang) {
     if (serviciosList && langText[lang].servicios_list) {
         serviciosList.forEach((li, i) => {
             if (langText[lang].servicios_list[i]) li.textContent = langText[lang].servicios_list[i];
+        });
+    }
+
+    // Servicios premium (h4 y p)
+    // Traducción de títulos y textos intro de servicios premium
+    const serviciosPremiumTitles = [
+        { selector: '.servicios-premium-section .titulo-principal', es: 'SERVICIOS PREMIUM', en: 'PREMIUM SERVICES' },
+        { selector: '.servicios-premium-section .descripcion-intro', es: 'Cuidamos tu estilo. Cuidamos tu experiencia.', en: 'We care for your style. We care for your experience.' },
+        { selector: '.servicios-premium-section .categoria-titulo:nth-of-type(1)', es: 'MANOS & PIES', en: 'HANDS & FEET' },
+        { selector: '.servicios-premium-section .categoria-titulo:nth-of-type(2)', es: 'SPA & BIENESTAR', en: 'SPA & WELLNESS' },
+        { selector: '.servicios-premium-section .categoria-titulo:nth-of-type(3)', es: 'ESTILISMO – DAMAS', en: 'STYLING – WOMEN' },
+        { selector: '.servicios-premium-section .categoria-titulo:nth-of-type(4)', es: 'BARBERÍA – CABALLEROS', en: 'BARBERING – MEN' }
+    ];
+    serviciosPremiumTitles.forEach(t => {
+        const el = document.querySelector(t.selector);
+        if (el) el.textContent = (lang === 'en') ? t.en : t.es;
+    });
+
+    // Traducción de la frase "Los detalles hacen la diferencia"
+    const fraseDetalles = document.querySelector('.frase');
+    if (fraseDetalles) {
+        fraseDetalles.textContent = (lang === 'en') ? '“Details make the difference.” — BELIEVE' : '“Los detalles hacen la diferencia.” — BELIEVE';
+    }
+
+    // Traducción de "Click para ver reseña" en las fotos del equipo
+    document.querySelectorAll('.staff-photo .click-msg').forEach(el => {
+        el.textContent = (lang === 'en') ? 'Click to see review' : 'Click para ver reseña';
+    });
+    const serviciosPremium = [
+        // Manos y Pies / Spa
+        {
+            h4: [
+                'Manicura Profesional',
+                'Pedicura Spa',
+                'Faciales Revitalizantes'
+            ],
+            h4_en: [
+                'Professional Manicure',
+                'Spa Pedicure',
+                'Revitalizing Facials'
+            ],
+            p: [
+                'Acabado limpio y duradero.',
+                'Relajación, suavidad y cuidado profundo.',
+                'Limpieza profunda y piel renovada.'
+            ],
+            p_en: [
+                'Clean, long-lasting finish.',
+                'Relaxation, softness and deep care.',
+                'Deep cleansing and renewed skin.'
+            ]
+        },
+        // Damas
+        {
+            h4: [
+                'Cortes y Estilos Modernos',
+                'Blowout Bar'
+            ],
+            h4_en: [
+                'Modern Cuts & Styles',
+                'Blowout Bar'
+            ],
+            p: [
+                'Looks elegantes que resaltan tu belleza.',
+                'Volumen, brillo y acabado pulido.'
+            ],
+            p_en: [
+                'Elegant looks that highlight your beauty.',
+                'Volume, shine and polished finish.'
+            ]
+        },
+        // Caballeros
+        {
+            h4: [
+                'Cortes en Tendencia',
+                'Cortes y Estilos Modernos',
+                'Arreglo de Barba',
+                'Color & Highlights'
+            ],
+            h4_en: [
+                'Trend Cuts',
+                'Modern Cuts & Styles',
+                'Beard Grooming',
+                'Color & Highlights'
+            ],
+            p: [
+                'Estilos modernos, limpios y definidos.',
+                'Looks elegantes que resaltan tu belleza.',
+                'Diseño y terminaciones profesionales.',
+                'Acabado vibrante, saludable y profesional.'
+            ],
+            p_en: [
+                'Modern, clean and defined styles.',
+                'Elegant looks that highlight your beauty.',
+                'Professional design and finishing.',
+                'Vibrant, healthy and professional finish.'
+            ]
+        }
+    ];
+
+    // Actualiza los textos de servicios premium
+    const serviciosSections = document.querySelectorAll('.servicios-premium-section');
+    if (serviciosSections.length) {
+        // Manos y Pies / Spa
+        const manosBoxes = serviciosSections[0].querySelectorAll('.servicios-doble .servicio-box');
+        serviciosPremium[0].h4.forEach((txt, i) => {
+            if (manosBoxes[i]) manosBoxes[i].querySelector('h4').textContent = (lang === 'en') ? serviciosPremium[0].h4_en[i] : txt;
+            if (manosBoxes[i]) manosBoxes[i].querySelector('p').textContent = (lang === 'en') ? serviciosPremium[0].p_en[i] : serviciosPremium[0].p[i];
+        });
+        // Damas
+        const damasBoxes = serviciosSections[0].querySelectorAll('.servicios-grid')[0].querySelectorAll('.servicio-box');
+        serviciosPremium[1].h4.forEach((txt, i) => {
+            if (damasBoxes[i]) damasBoxes[i].querySelector('h4').textContent = (lang === 'en') ? serviciosPremium[1].h4_en[i] : txt;
+            if (damasBoxes[i]) damasBoxes[i].querySelector('p').textContent = (lang === 'en') ? serviciosPremium[1].p_en[i] : serviciosPremium[1].p[i];
+        });
+        // Caballeros
+        const caballerosBoxes = serviciosSections[0].querySelectorAll('.servicios-grid')[1].querySelectorAll('.servicio-box');
+        serviciosPremium[2].h4.forEach((txt, i) => {
+            if (caballerosBoxes[i]) caballerosBoxes[i].querySelector('h4').textContent = (lang === 'en') ? serviciosPremium[2].h4_en[i] : txt;
+            if (caballerosBoxes[i]) caballerosBoxes[i].querySelector('p').textContent = (lang === 'en') ? serviciosPremium[2].p_en[i] : serviciosPremium[2].p[i];
         });
     }
 
@@ -1082,7 +1221,7 @@ function updateLanguage(lang) {
             'damas': { es: 'Damas', en: 'Women' },
             'caballeros': { es: 'Caballeros', en: 'Men' },
             'ninos': { es: 'Niños', en: 'Kids' },
-            'manicura-pedicura': { es: 'Manicura', en: 'Pedicure' }
+            'manicura-pedicura': { es: 'Manicura', en: 'Manicure' }
         };
         const span = item.querySelector('.gallery-category');
         if (span) {
