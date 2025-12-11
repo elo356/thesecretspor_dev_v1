@@ -232,6 +232,7 @@ nav {
     width: 180px;
     height: 180px;
     object-fit: cover;
+    object-position: top;
     border-radius: 50%;
     margin-bottom: 15px;
     box-shadow: 0 5px 25px rgba(0,0,0,0.25);
@@ -2051,5 +2052,28 @@ footer {
     .frase {
         font-size: .9rem;
         margin-top: .5rem;
+    }
+}
+.collage-cuadrado {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: repeat(2, 280px); /* ANTES 150px — ahora más gruesas */
+    gap: 14px;
+    margin: 2.5rem 0 3rem;
+}
+
+.collage-cuadrado img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 14px;
+    border: 2px solid rgba(0,0,0,0.08);
+    transition: .3s ease;
+}
+
+@media (max-width: 768px) {
+    .collage-cuadrado {
+        grid-template-rows: repeat(2, 160px); /* más grueso también en móvil */
+        gap: 10px;
     }
 }
