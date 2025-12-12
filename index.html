@@ -1816,45 +1816,62 @@ window.updateStaffModalLanguage = function() {
 <script>
 document.addEventListener("DOMContentLoaded", () => {
     const video = document.getElementById("hero-video");
-    const heroSection = document.getElementById("inicio");
+    const hero = document.getElementById("inicio");
 
-    if (!video || !heroSection) return;
+    if (!video || !hero) return;
 
-    // Seguridad inicial
+    // Forzar estado inicial correcto
     video.muted = true;
+    video.playsInline = true;
 
-    const observer = new IntersectionObserver(
-        (entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    // Entró al hero → activar sonido
-                    video.muted = false;
-                    video.volume = 1;
-                    video.play().catch(() => {});
-                } else {
-                    // Salió del hero → silenciar
-                    video.muted = true;
-                }
-            });
-        },
-        {
-            threshold: 0.6 // 60% visible
-        }
-    );
+    // Detectar mobile
+    const isMobile = window.matchMedia("(max-width: 768px)").matches;
 
-    observer.observe(heroSection);
+    // Distancias diferentes según dispositivo
+    const observerOptions = {
+        root: null,
+        rootMargin: isMobile
+            ? "-10% 0px -40% 0px"  // MOBILE → se apaga mucho más tarde
+            : "-20% 0px -60% 0px", // DESKTOP
+        threshold: isMobile ? 0.15 : 0.5
+    };
 
-    // Interacción mínima requerida por el navegador
+    let userInteracted = false;
+
+    // Detectar interacción mínima (requerida por navegadores)
     const enableAudio = () => {
+        userInteracted = true;
         video.muted = false;
         video.volume = 1;
         video.play().catch(() => {});
-        document.removeEventListener("click", enableAudio);
-        document.removeEventListener("touchstart", enableAudio);
     };
 
-    document.addEventListener("click", enableAudio, { once: true });
-    document.addEventListener("touchstart", enableAudio, { once: true });
+    ["click", "touchstart", "scroll"].forEach(evt => {
+        document.addEventListener(evt, enableAudio, { once: true });
+    });
+
+    const observer = new IntersectionObserver(entries => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                // Entrando al hero
+                video.play().catch(() => {});
+
+                if (userInteracted) {
+                    video.muted = false;
+                }
+            } else {
+                // Saliendo del hero
+                video.muted = true;
+            }
+        });
+    }, observerOptions);
+
+    observer.observe(hero);
+
+    // 🔥 FIX CRÍTICO: evitar video congelado al inicio en mobile
+    setTimeout(() => {
+        video.play().catch(() => {});
+    }, 300);
 });
 </script>
 
