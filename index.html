@@ -4,7 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>The Secret Spot | Estilismo Moderno | Isabela, Puerto Rico</title>
-    <meta name="description" content="The Secret Spot - Grooming Studio en Isabela, Puerto Rico. Estilismo premium con más de 20 años de experiencia. Cambios de imagen, cortes en tendencia, barbería y más.">
+    <meta name="description" content="The Secret Spot – Ladies & Men Grooming Studio en Isabela, Puerto Rico. Barbería, estilismo, manicura, pedicura y cambios de imagen con más de 20 años de experiencia.">
+
     <meta name="keywords" content="barbería, estilismo, Isabela, Puerto Rico, grooming, cortes de cabello, cambios de imagen">
     <meta name="google-site-verification" content="L9i6AuYefYKIA7xwVVOkfvQ-Em3-TxxON2Vpc2IukVg" />
     <meta property="og:image" content="https://ladiesandmengrooming.com/images/og-image.jpg">
@@ -77,15 +78,13 @@
 
     <!-- Hero Section -->
     <section class="hero" id="inicio">
-        <video id="hero-video" autoplay muted loop playsinline webkit-playsinline preload="auto">
-            <source src="images/vids/vid3.mp4" type="video/mp4">
-            Tu navegador no soporta el elemento de video.
-        </video>
-        <button id="audio-toggle" class="audio-toggle" aria-pressed="false" title="Activar sonido">🔊 Escuchar</button>
-        <!-- sound control removed per user preference (no visible button) -->
+      <video id="hero-video" autoplay muted loop playsinline webkit-playsinline preload="auto">
+    <source src="images/vids/vid3.mp4" type="video/mp4">
+</video>
+
         <div class="hero-content">
-            <h1>Estilismo Premium con Atención al Detalle</h1>
-            <p class="subtitle">Experimenta la transformación que mereces en nuestro grooming studio moderno</p>
+            <h1 class="hero-title">The Secret Spot – Ladies & Men Grooming Studio</h1>
+            <p class="subtitle">Estilismo premium con atención al detalle en Isabela, Puerto Rico</p>
             <div class="cta-buttons">
                 <a href="https://booksy.com/en-us/491030_the-secret-spot-ladies-mens-grooming-isabela-p-r_hair-salon_107155_isabela" class="btn btn-primary" target="_blank">
                     <i class="fas fa-calendar-check"></i> Reserva tu Cita
@@ -96,88 +95,6 @@
             </div>
         </div>
     </section>
-
-        <script>
-        (function(){
-            const video = document.getElementById('hero-video');
-            const btn = document.getElementById('audio-toggle');
-            let audioEnabled = false;
-            let attemptedAutoStart = false;
-
-            function setButtonState(enabled){
-                if(enabled){
-                    btn.textContent = '🔈 Silenciar';
-                    btn.setAttribute('aria-pressed','true');
-                } else {
-                    btn.textContent = '🔊 Escuchar';
-                    btn.setAttribute('aria-pressed','false');
-                }
-            }
-
-            // Start muted autoplay
-            function startMuted(){
-                if(!video) return;
-                video.muted = true;
-                video.play().catch(()=>{});
-            }
-            startMuted();
-
-            // Button toggles audio (kept visible per request)
-            btn.addEventListener('click', function(){
-                if(!audioEnabled){
-                    // User gesture: try to enable audio
-                    video.muted = false;
-                    video.play().then(()=>{
-                        audioEnabled = true;
-                        setButtonState(true);
-                    }).catch(err=>{
-                        console.warn('No se pudo reproducir con sonido:', err);
-                        video.muted = true;
-                        audioEnabled = false;
-                        setButtonState(false);
-                    });
-                } else {
-                    // Mute
-                    video.muted = true;
-                    audioEnabled = false;
-                    setButtonState(false);
-                }
-            });
-
-            // Observe visibility of the video element
-            const io = new IntersectionObserver(function(entries){
-                entries.forEach(function(entry){
-                    if(entry.isIntersecting && entry.intersectionRatio > 0.4){
-                        // visible: ensure playback, and try automatic audio start once
-                        video.play().catch(()=>{});
-                        if(!attemptedAutoStart){
-                            attemptedAutoStart = true;
-                            // small delay to allow any user gestures first
-                            setTimeout(()=>{
-                                // Try to unmute and play with sound (may be blocked by browser)
-                                video.muted = false;
-                                video.play().then(()=>{
-                                    audioEnabled = true;
-                                    setButtonState(true);
-                                }).catch(err=>{
-                                    // Autoplay with sound blocked — revert to muted and keep button
-                                    console.warn('Autoplay con sonido bloqueado:', err);
-                                    video.muted = true;
-                                    audioEnabled = false;
-                                    setButtonState(false);
-                                });
-                            }, 700);
-                        }
-                    } else {
-                        // not visible: pause to stop audio
-                        try{ video.pause(); }catch(e){}
-                    }
-                });
-            }, { threshold: [0, 0.25, 0.5, 0.75, 1] });
-
-            if(video) io.observe(video);
-        })();
-        </script>
 <section id="servicios-premium" class="servicios-premium-section">
 
 
@@ -921,7 +838,7 @@ const translationMap = [
     { selector: 'nav .nav-links a:nth-child(3)', key: 'nosotros' },
     { selector: 'nav .nav-links a:nth-child(4)', key: 'galeria' },
     { selector: 'nav .nav-links a:nth-child(5)', key: 'contacto' },
-    { selector: '.hero h1', key: 'hero_title' },
+    { selector: '.hero-title', key: 'hero_title' },
     { selector: '.hero .subtitle', key: 'hero_subtitle' },
     { selector: '.hero .btn-primary', key: 'reservar' },
     { selector: '.hero .btn-secondary', key: 'llamar' },
@@ -1892,6 +1809,53 @@ window.updateStaffModalLanguage = function() {
     }
 };
 
+
+
+
+</script>
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+    const video = document.getElementById("hero-video");
+    const heroSection = document.getElementById("inicio");
+
+    if (!video || !heroSection) return;
+
+    // Seguridad inicial
+    video.muted = true;
+
+    const observer = new IntersectionObserver(
+        (entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    // Entró al hero → activar sonido
+                    video.muted = false;
+                    video.volume = 1;
+                    video.play().catch(() => {});
+                } else {
+                    // Salió del hero → silenciar
+                    video.muted = true;
+                }
+            });
+        },
+        {
+            threshold: 0.6 // 60% visible
+        }
+    );
+
+    observer.observe(heroSection);
+
+    // Interacción mínima requerida por el navegador
+    const enableAudio = () => {
+        video.muted = false;
+        video.volume = 1;
+        video.play().catch(() => {});
+        document.removeEventListener("click", enableAudio);
+        document.removeEventListener("touchstart", enableAudio);
+    };
+
+    document.addEventListener("click", enableAudio, { once: true });
+    document.addEventListener("touchstart", enableAudio, { once: true });
+});
 </script>
 
 </body>
