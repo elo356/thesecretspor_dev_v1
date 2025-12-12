@@ -78,10 +78,12 @@
 
     <!-- Hero Section -->
     <section class="hero" id="inicio">
-      <video id="hero-video" autoplay muted loop playsinline webkit-playsinline preload="auto">
-    <source src="images/vids/vid3.mp4" type="video/mp4">
-</video>
-
+        <video id="hero-video" autoplay muted loop playsinline webkit-playsinline preload="auto">
+            <source src="images/vids/vid3.mp4" type="video/mp4">
+            Tu navegador no soporta el elemento de video.
+        </video>
+        <button id="audio-toggle" class="audio-toggle" aria-pressed="false" title="Activar sonido">🔊 Escuchar</button>
+        <!-- sound control removed per user preference (no visible button) -->
         <div class="hero-content">
             <h1 class="hero-title">The Secret Spot – Ladies & Men Grooming Studio</h1>
             <p class="subtitle">Estilismo premium con atención al detalle en Isabela, Puerto Rico</p>
@@ -95,6 +97,88 @@
             </div>
         </div>
     </section>
+
+        <script>
+        (function(){
+            const video = document.getElementById('hero-video');
+            const btn = document.getElementById('audio-toggle');
+            let audioEnabled = false;
+            let attemptedAutoStart = false;
+
+            function setButtonState(enabled){
+                if(enabled){
+                    btn.textContent = '🔈 Silenciar';
+                    btn.setAttribute('aria-pressed','true');
+                } else {
+                    btn.textContent = '🔊 Escuchar';
+                    btn.setAttribute('aria-pressed','false');
+                }
+            }
+
+            // Start muted autoplay
+            function startMuted(){
+                if(!video) return;
+                video.muted = true;
+                video.play().catch(()=>{});
+            }
+            startMuted();
+
+            // Button toggles audio (kept visible per request)
+            btn.addEventListener('click', function(){
+                if(!audioEnabled){
+                    // User gesture: try to enable audio
+                    video.muted = false;
+                    video.play().then(()=>{
+                        audioEnabled = true;
+                        setButtonState(true);
+                    }).catch(err=>{
+                        console.warn('No se pudo reproducir con sonido:', err);
+                        video.muted = true;
+                        audioEnabled = false;
+                        setButtonState(false);
+                    });
+                } else {
+                    // Mute
+                    video.muted = true;
+                    audioEnabled = false;
+                    setButtonState(false);
+                }
+            });
+
+            // Observe visibility of the video element
+            const io = new IntersectionObserver(function(entries){
+                entries.forEach(function(entry){
+                    if(entry.isIntersecting && entry.intersectionRatio > 0.4){
+                        // visible: ensure playback, and try automatic audio start once
+                        video.play().catch(()=>{});
+                        if(!attemptedAutoStart){
+                            attemptedAutoStart = true;
+                            // small delay to allow any user gestures first
+                            setTimeout(()=>{
+                                // Try to unmute and play with sound (may be blocked by browser)
+                                video.muted = false;
+                                video.play().then(()=>{
+                                    audioEnabled = true;
+                                    setButtonState(true);
+                                }).catch(err=>{
+                                    // Autoplay with sound blocked — revert to muted and keep button
+                                    console.warn('Autoplay con sonido bloqueado:', err);
+                                    video.muted = true;
+                                    audioEnabled = false;
+                                    setButtonState(false);
+                                });
+                            }, 700);
+                        }
+                    } else {
+                        // not visible: pause to stop audio
+                        try{ video.pause(); }catch(e){}
+                    }
+                });
+            }, { threshold: [0, 0.25, 0.5, 0.75, 1] });
+
+            if(video) io.observe(video);
+        })();
+        </script>
 <section id="servicios-premium" class="servicios-premium-section">
 
 
@@ -1809,70 +1893,6 @@ window.updateStaffModalLanguage = function() {
     }
 };
 
-
-
-
-</script>
-<script>
-document.addEventListener("DOMContentLoaded", () => {
-    const video = document.getElementById("hero-video");
-    const hero = document.getElementById("inicio");
-
-    if (!video || !hero) return;
-
-    // Forzar estado inicial correcto
-    video.muted = true;
-    video.playsInline = true;
-
-    // Detectar mobile
-    const isMobile = window.matchMedia("(max-width: 768px)").matches;
-
-    // Distancias diferentes según dispositivo
-    const observerOptions = {
-        root: null,
-        rootMargin: isMobile
-            ? "-10% 0px -40% 0px"  // MOBILE → se apaga mucho más tarde
-            : "-20% 0px -60% 0px", // DESKTOP
-        threshold: isMobile ? 0.15 : 0.5
-    };
-
-    let userInteracted = false;
-
-    // Detectar interacción mínima (requerida por navegadores)
-    const enableAudio = () => {
-        userInteracted = true;
-        video.muted = false;
-        video.volume = 1;
-        video.play().catch(() => {});
-    };
-
-    ["click", "touchstart", "scroll"].forEach(evt => {
-        document.addEventListener(evt, enableAudio, { once: true });
-    });
-
-    const observer = new IntersectionObserver(entries => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                // Entrando al hero
-                video.play().catch(() => {});
-
-                if (userInteracted) {
-                    video.muted = false;
-                }
-            } else {
-                // Saliendo del hero
-                video.muted = true;
-            }
-        });
-    }, observerOptions);
-
-    observer.observe(hero);
-
-    // 🔥 FIX CRÍTICO: evitar video congelado al inicio en mobile
-    setTimeout(() => {
-        video.play().catch(() => {});
-    }, 300);
-});
 </script>
 
 </body>
